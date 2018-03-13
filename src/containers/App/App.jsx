@@ -10,17 +10,6 @@ import appRoutes from 'routes/app.jsx';
 import { appStyle } from 'variables/styles';
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/tutorbox.png';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
-
-const client = new ApolloClient({
-  link: new HttpLink('http://localhost.com/graphql'),
-  cache: new InMemoryCache(),
-});
-
-
 const switchRoutes = <Switch>
   {
     appRoutes.map((prop, key) => {
@@ -34,53 +23,51 @@ class App extends React.Component{
   state = {
     mobileOpen: false,
   };
-  
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
-  
+
   componentDidMount(){
     if(window.innerWidth > 991) {
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
   }
-  
+
   componentDidUpdate(){
     this.refs.mainPanel.scrollTop = 0;
   }
-  
+
   render(){
     const { classes, ...rest } = this.props;
 
     return (
-      <ApolloProvider client={client}>
-        <div className={classes.wrapper}>
-          <Sidebar
+      <div className={classes.wrapper}>
+        <Sidebar
+          routes={appRoutes}
+          logoText="Tutorbox - ADM"
+          logo={logo}
+          image={image}
+          handleDrawerToggle={this.handleDrawerToggle}
+          open={this.state.mobileOpen}
+          color="blue"
+          {...rest}
+        />
+        <div className={classes.mainPanel} ref="mainPanel">
+          <Header
             routes={appRoutes}
-            logoText={"Tutorbox - ADM"}
-            logo={logo}
-            image={image}
             handleDrawerToggle={this.handleDrawerToggle}
-            open={this.state.mobileOpen}
-            color="blue"
             {...rest}
           />
-          <div className={classes.mainPanel} ref="mainPanel">
-            <Header
-              routes={appRoutes}
-              handleDrawerToggle={this.handleDrawerToggle}
-              {...rest}
-            />
-            <div className={classes.content}>
-              <div className={classes.container}>
-                {switchRoutes}
-              </div>
+          <div className={classes.content}>
+            <div className={classes.container}>
+              {switchRoutes}
             </div>
-            <Footer />
           </div>
+          <Footer />
         </div>
-      </ApolloProvider>
+      </div>
     );
   }
 }
