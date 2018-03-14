@@ -5,26 +5,20 @@ import gql from 'graphql-tag';
 import {
   RegularCard, Table, ItemGrid, Tasks, CustomInput, Button
 } from 'components';
+import { AUTH_TOKEN, SIGNUP_REST_URL, getToken } from '../../consts.jsx';
 
-const AUTH_TOKEN = 'auth-token';
-const SIGNUP_REST_URL = 'http://localhost:3000/authenticate'
-
-// # curl -H "Content-Type: application/json" -X POST -d '{"email":"example@mail.com","password":"123123123"}' 
 class Login extends React.Component{
   state = {
     email: '',
     password: '',
+    isLogged: false
   };
 
   _saveUserData = token => {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 
-  _confirm = async () => {
-  // ... you'll implement this in a bit
-  }
-
-  _login = () => {
+  _login = () =>
     fetch(SIGNUP_REST_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -32,10 +26,20 @@ class Login extends React.Component{
         email: this.state.email, 
         password: this.state.password 
       }),
-    }).then(res => res.json()).then(data => { if(data['auth_token']) this._saveUserData(data['auth_token']) } )
-  }
-
+    }).then(res => res.json()).then(data => { 
+        if(data['auth_token']) {
+          this._saveUserData(data['auth_token']);
+          this.props.history.push('/')
+        }  else {
+          alert(Object.values(data.error).join(','));
+        }
+      })
+// "email":"example@mail.com","password":"123123123"
   render(){
+    if(getToken()) {
+      this.props.history.push('/')
+    }
+    
     return(
       <RegularCard
           headerColor="blue"
@@ -45,16 +49,22 @@ class Login extends React.Component{
               <CustomInput
                 labelText="Email"
                 value={this.state.email}
-                inputProps={ { onChange: e => this.setState({ email: e.target.value }) } }
                 formControlProps={{ fullWidth: true }}
+                inputProps={{
+                  onChange: e => this.setState({ email: e.target.value }) 
+                }}
               />
               <CustomInput
                 labelText="Senha"
-                inputProps={ { onChange: e => this.setState({ password: e.target.value }) } }
                 value={this.state.password}
                 formControlProps={{ fullWidth: true  }}
+                inputProps={{ 
+                  onChange: e => this.setState({ password: e.target.value }),
+                  type: "password"
+                }}
               />
               <Button color="success" onClick={this._login}>Enviar</Button>
+              <Button color="success" onClick={() => { alert(localStorage.getItem(AUTH_TOKEN)) }}>See it</Button>
           </div>
         } />
     );

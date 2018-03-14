@@ -10,6 +10,8 @@ import appRoutes from 'routes/app.jsx';
 import { appStyle } from 'variables/styles';
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/tutorbox.png';
+
+import { getToken } from '../../consts.jsx';
 const switchRoutes = <Switch>
   {
     appRoutes.map((prop, key) => {
@@ -35,16 +37,27 @@ class App extends React.Component{
     }
   }
 
+  isLogin(){
+    return this.props.location.pathname === "/login";
+  }
+
+  isLogged(){
+    return !!getToken()
+  }
+
   componentDidUpdate(){
     this.refs.mainPanel.scrollTop = 0;
   }
 
   render(){
     const { classes, ...rest } = this.props;
+    if(!this.isLogin() && !this.isLogged()) {
+      rest.history.push('/login')
+    }
 
     return (
       <div className={classes.wrapper}>
-        <Sidebar
+        {!this.isLogin() && <Sidebar
           routes={appRoutes}
           logoText="Tutorbox - ADM"
           logo={logo}
@@ -53,19 +66,19 @@ class App extends React.Component{
           open={this.state.mobileOpen}
           color="blue"
           {...rest}
-        />
-        <div className={classes.mainPanel} ref="mainPanel">
-          <Header
+        />}
+        <div className={!this.isLogin() && classes.mainPanel} ref="mainPanel">
+          {!this.isLogin() && <Header
             routes={appRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
-          />
+          />}
           <div className={classes.content}>
             <div className={classes.container}>
               {switchRoutes}
             </div>
           </div>
-          <Footer />
+          {!this.isLogin() &&  <Footer />}
         </div>
       </div>
     );
