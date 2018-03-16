@@ -11,7 +11,7 @@ import { appStyle } from 'variables/styles';
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/tutorbox.png';
 
-import { getToken } from '../../consts.jsx';
+import { getToken, logout } from '../../consts.jsx';
 const switchRoutes = <Switch>
   {
     appRoutes.map((prop, key) => {
@@ -39,6 +39,10 @@ class App extends React.Component{
 
   isLogin(){
     return this.props.location.pathname === "/login";
+  } 
+
+  isLogout(){
+    return this.props.location.pathname === "/logout";
   }
 
   isLogged(){
@@ -51,7 +55,11 @@ class App extends React.Component{
 
   render(){
     const { classes, ...rest } = this.props;
-    if(!this.isLogin() && !this.isLogged()) {
+
+    if(this.isLogout()) {
+      logout()
+      rest.history.push('/login')
+    } else if(!this.isLogin() && !this.isLogged()) {
       rest.history.push('/login')
     }
 

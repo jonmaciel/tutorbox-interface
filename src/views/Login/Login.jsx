@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import {
   RegularCard, Table, ItemGrid, Tasks, CustomInput, Button
 } from 'components';
-import { AUTH_TOKEN, SIGNUP_REST_URL, getToken } from '../../consts.jsx';
+import { AUTH_TOKEN, SIGNUP_REST_URL, getToken, setToken } from '../../consts.jsx';
 
 class Login extends React.Component{
   state = {
@@ -13,10 +13,6 @@ class Login extends React.Component{
     password: '',
     isLogged: false
   };
-
-  _saveUserData = token => {
-    localStorage.setItem(AUTH_TOKEN, token)
-  }
 
   _login = () =>
     fetch(SIGNUP_REST_URL, {
@@ -28,7 +24,7 @@ class Login extends React.Component{
       }),
     }).then(res => res.json()).then(data => { 
         if(data['auth_token']) {
-          this._saveUserData(data['auth_token']);
+          setToken(data['auth_token']);
           this.props.history.push('/')
         }  else {
           alert(Object.values(data.error).join(','));
