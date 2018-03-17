@@ -1,4 +1,12 @@
 // ##############################
+// // // VideoPage
+// #############################
+
+import VideoPlayer from './VideoPlayer.jsx';
+import TaskList from './TaskList.jsx';
+import CommentList from './CommentList.jsx';
+
+// ##############################
 // // // Cards
 // #############################
 
@@ -81,6 +89,9 @@ import Small from "./Typography/Small.jsx";
 import A from './Typography/A.jsx';
 
 export {
+    VideoPlayer,
+    CommentList,
+    TaskList,
     // Cards
     ChartCard, ProfileCard, RegularCard, StatsCard, TasksCard,
     // CustomButtons
