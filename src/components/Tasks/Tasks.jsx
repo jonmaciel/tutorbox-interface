@@ -24,7 +24,7 @@ class Tasks extends React.Component{
       checked: newChecked,
     });
   };
-  
+
   render(){
     const { classes, tasksIndexes, tasks } = this.props;
     return (

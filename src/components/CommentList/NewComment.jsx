@@ -41,7 +41,6 @@ class NewComment extends Component {
         <Button onClick={this.onClick.bind(this)} color="success">Enviar</Button>
       </div>
     )
-
   }
 }
 
@@ -62,6 +61,4 @@ export default graphql(gql`
       ) {
         comment { id }
       }
-    }`, {
-  options: ({ videoId }) => ({ variables: { videoId } }),
-})(NewComment);
+    }`)(NewComment);

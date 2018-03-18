@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { RegularCard, Table, CustomInput, Button } from 'components';
+import { RegularCard } from 'components'
+import { withStyles, Checkbox, IconButton, Table, TableBody, TableCell, TableRow, Tooltip } from 'material-ui';
 import { P } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
 import NewComment from './NewComment.jsx';
+import DeleteComment from './DeleteComment.jsx';
 
 const style = {
   typo: {
@@ -33,23 +34,26 @@ class CommentList extends Component {
   componentDidMount() {
     setInterval(
       () => this.props.data.refetch(),
-    10000);
+    70000);
   }
 
   render () {
-    const { classes: { typo, note }, data: { video, refetch }, error } = this.props;
+    const { classes: { typo, note, removeButton }, data: { video, refetch }, error } = this.props;
     if (!video) { return <div /> }
     return <RegularCard
       headerColor="green"
       cardTitle="Comentários"
       content={
       <div>
-        {video.comments.map(({ body, author: { name }}) =>
+        {video.comments.map(({ id, body, author: { name }}) =>
           <div className={typo}>
             <div className={note}>
               {name}
             </div>
-            <P>{body}</P>
+            <P>
+              {body}
+              <DeleteComment commentId={id} refetchComments={refetch} />
+            </P>
           </div>
         )}
         <NewComment videoId={video.id} refetchComments={refetch} />
