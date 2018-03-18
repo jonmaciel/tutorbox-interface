@@ -1,4 +1,6 @@
-import TableList from "views/VideoList/VideoList.jsx";
+import VideoList from "views/VideoList/VideoList.jsx";
+import OrganizationList from "views/Organization/OrganizationList.jsx";
+import Organization from "views/Organization/Organization.jsx";
 import MediaPlayer from "views/Video/MediaPlayer.jsx";
 import Login from "views/Login/Login.jsx";
 import {
@@ -7,7 +9,9 @@ import {
 
 const appRoutes = [
     { path: "/login", component: Login },
-    { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: "Vídeos", icon: ContentPaste, component: TableList },
+    { path: "/Organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList },
+    { path: "/organization/:id", component: Organization },
+    { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList },
     { path: "/video/:id", component: MediaPlayer },
     { redirect: true, path: "/", to: "/videos", navbarName: "Redirect" }
 ];
