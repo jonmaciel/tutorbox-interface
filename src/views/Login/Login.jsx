@@ -18,11 +18,11 @@ class Login extends React.Component{
     fetch(SIGNUP_REST_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        email: this.state.email, 
-        password: this.state.password 
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
       }),
-    }).then(res => res.json()).then(data => { 
+    }).then(res => res.json()).then(data => {
         if(data['auth_token']) {
           setToken(data['auth_token']);
           this.props.history.push('/')
@@ -35,7 +35,7 @@ class Login extends React.Component{
     if(getToken()) {
       this.props.history.push('/')
     }
-    
+
     return(
       <RegularCard
           headerColor="blue"
@@ -47,14 +47,14 @@ class Login extends React.Component{
                 value={this.state.email}
                 formControlProps={{ fullWidth: true }}
                 inputProps={{
-                  onChange: e => this.setState({ email: e.target.value }) 
+                  onChange: e => this.setState({ email: e.target.value })
                 }}
               />
               <CustomInput
                 labelText="Senha"
                 value={this.state.password}
                 formControlProps={{ fullWidth: true  }}
-                inputProps={{ 
+                inputProps={{
                   onChange: e => this.setState({ password: e.target.value }),
                   type: "password"
                 }}

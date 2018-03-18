@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { RegularCard, Table, CustomInput, Button } from 'components';
 import { P } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
+import NewComment from './NewComment.jsx';
 
 const style = {
   typo: {
@@ -27,32 +28,35 @@ const style = {
   },
 }
 
-const CommentList = ({ classes: { typo, note }, data: { video, refetch }, error }) => {
-  if (!video) { return <div /> }
+class CommentList extends Component {
 
-  return <RegularCard
-    headerColor="green"
-    cardTitle="Comentários"
-    content={
-    <div>
-      {video.comments.map(({ body, author: { name }}) =>
-        <div className={typo}>
-          <div className={note}>
-            {name}
+  componentDidMount() {
+    setInterval(
+      () => this.props.data.refetch(),
+    10000);
+  }
+
+  render () {
+    const { classes: { typo, note }, data: { video, refetch }, error } = this.props;
+    if (!video) { return <div /> }
+    return <RegularCard
+      headerColor="green"
+      cardTitle="Comentários"
+      content={
+      <div>
+        {video.comments.map(({ body, author: { name }}) =>
+          <div className={typo}>
+            <div className={note}>
+              {name}
+            </div>
+            <P>{body}</P>
           </div>
-          <P>{body}</P>
-        </div>
-      )}
-      <CustomInput
-         labelText="Novo Comentário"
-         id="new-comentary"
-         formControlProps={{
-           fullWidth: true
-         }}
-       />
-      <Button color="success">Enviar</Button>
-    </div>
-  } />
+        )}
+        <NewComment videoId={video.id} refetchComments={refetch} />
+      </div>
+    } />
+  }
+
 };
 
 CommentList.propTypes = {
@@ -64,6 +68,7 @@ CommentList.propTypes = {
 export default graphql(gql`
 query($videoId: ID!) {
   video(id: $videoId) {
+    id
     comments {
       id
       body

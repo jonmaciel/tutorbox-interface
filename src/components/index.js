@@ -4,7 +4,7 @@
 
 import VideoPlayer from './VideoPlayer.jsx';
 import TaskList from './TaskList.jsx';
-import CommentList from './CommentList.jsx';
+import CommentList from './CommentList/CommentList.jsx';
 
 // ##############################
 // // // Cards
