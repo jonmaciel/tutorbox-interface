@@ -6,20 +6,30 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import ModalNewVideo from './ModalNewVideo.jsx';
+import ModalDeleteVideo from './ModalDeleteVideo.jsx';
 
 class VideoList extends Component {
   state = {
-    modalIsOpen: false
+    modalDeleteIsOpen: false,
+    modalCreateIsOpen: false,
+    currentVideo: undefined,
   };
 
-  openModal = () => {
-    this.setState({modalIsOpen: true});
+  openCreateModal = () => {
+    this.setState({modalCreateIsOpen: true});
   }
 
-  closeModal = () => {
-    this.setState({modalIsOpen: false});
+  closeCreateModal = () => {
+    this.setState({modalCreateIsOpen: false});
   }
 
+  openDeleteModal = (currentVideo) => {
+    this.setState({modalDeleteIsOpen: true, currentVideo});
+  }
+
+  closeDeleteModal = () => {
+    this.setState({ modalDeleteIsOpen: false, currentVideo: undefined });
+  }
 
   render() {
     const { data: { videos, refetch }, error } = this.props;
@@ -29,9 +39,15 @@ class VideoList extends Component {
         <ItemGrid xs={12} sm={12} md={12}>
           <a href="#" onClick={() => refetch()}>Atualizar</a>
           <ModalNewVideo
-            modalIsOpen={this.state.modalIsOpen}
-            closeModal={this.closeModal}
+            modalIsOpen={this.state.modalCreateIsOpen}
+            closeModal={this.closeCreateModal}
             refetchVideos={refetch}
+          />
+          <ModalDeleteVideo
+            modalIsOpen={this.state.modalDeleteIsOpen}
+            closeModal={this.closeDeleteModal}
+            refetchVideos={refetch}
+            video={this.state.currentVideo}
           />
           <RegularCard
             cardTitle="Vídeos"
@@ -40,9 +56,15 @@ class VideoList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Situação', <a href="#" onClick={() => this.openModal()}>Novo</a>]}
+                tableHead={['Title', 'Situação', <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
                 tableData={
-                  videos ? videos.map(video => [video.title, video.aasm_state, <Link to={`/video/${video.id}`}>Editar</Link>]) : []
+                  videos ? videos.map(video => [
+                                                 video.title,
+                                                 video.aasm_state,
+                                                 <div>
+                                                   <Link to={`/video/${video.id}`}>Editar</Link>
+                                                   <a href="#" onClick={ () => this.openDeleteModal(video) }>Delete</a>
+                                                 </div>]): []
                 }
               />
             }
