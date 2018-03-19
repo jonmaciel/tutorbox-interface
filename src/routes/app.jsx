@@ -9,7 +9,7 @@ import {
 
 const appRoutes = [
     { path: "/login", component: Login },
-    { path: "/Organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList },
+    { path: "/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList },
     { path: "/organization/:id", component: Organization },
     { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList },
     { path: "/video/:id", component: MediaPlayer },
