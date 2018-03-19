@@ -7,18 +7,29 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import ModalNewOrganization from './ModalNewOrganization.jsx';
+import ModalDeleteOrganization from './ModalDeleteOrganization.jsx';
 
 class OrganizationList extends Component {
   state = {
-    modalIsOpen: false
+    modalDeleteIsOpen: false,
+    modalCreateIsOpen: false,
+    currentOrganization: undefined,
   };
 
-  openModal = () => {
-    this.setState({modalIsOpen: true});
+  openCreateModal = () => {
+    this.setState({modalCreateIsOpen: true});
   }
 
-  closeModal = () => {
-    this.setState({modalIsOpen: false});
+  closeCreateModal = () => {
+    this.setState({modalCreateIsOpen: false});
+  }
+
+  openDeleteModal = (currentOrganization) => {
+    this.setState({modalDeleteIsOpen: true, currentOrganization});
+  }
+
+  closeDeleteModal = () => {
+    this.setState({ modalDeleteIsOpen: false, currentOrganization: undefined });
   }
 
   render() {
@@ -28,9 +39,15 @@ class OrganizationList extends Component {
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
           <ModalNewOrganization
-            modalIsOpen={this.state.modalIsOpen}
-            closeModal={this.closeModal}
+            modalIsOpen={this.state.modalCreateIsOpen}
+            closeModal={this.closeCreateModal}
             refetchOrganizations={refetch}
+          />
+          <ModalDeleteOrganization
+            modalIsOpen={this.state.modalDeleteIsOpen}
+            closeModal={this.closeDeleteModal}
+            refetchOrganizations={refetch}
+            organization={this.state.currentOrganization}
           />
           <a href="#" onClick={() => refetch()}>Atualizar</a>
           <RegularCard
@@ -40,9 +57,17 @@ class OrganizationList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', <a href="#" onClick={ () => this.openModal() }>Novo</a>]}
+                tableHead={['Title', <a href="#" onClick={ () => this.openCreateModal() }>Novo</a>]}
                 tableData={
-                  organizations ? organizations.map(user => [user.name, <Link to={`/organization/${user.id}`}>Editar</Link>]) : []
+                  organizations ?
+                    organizations.map(organization => [
+                                                organization.name,
+                                                <div>
+                                                  <Link to={`/organization/${organization.id}`}>Editar</Link>
+                                                   <a href="#" onClick={ () => this.openDeleteModal(organization) }>Delete</a>
+                                                </div>
+                                              ]) :
+                    []
                 }
               />
             }

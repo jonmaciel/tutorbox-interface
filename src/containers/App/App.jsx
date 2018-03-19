@@ -39,7 +39,7 @@ class App extends React.Component{
 
   isLogin(){
     return this.props.location.pathname === "/login";
-  } 
+  }
 
   isLogout(){
     return this.props.location.pathname === "/logout";
@@ -75,7 +75,7 @@ class App extends React.Component{
           color="blue"
           {...rest}
         />}
-        <div className={!this.isLogin() && classes.mainPanel} ref="mainPanel">
+        <div id="container-body" className={!this.isLogin() && classes.mainPanel} ref="mainPanel">
           {!this.isLogin() && <Header
             routes={appRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
