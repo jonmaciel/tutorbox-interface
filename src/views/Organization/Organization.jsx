@@ -6,6 +6,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import UserList from '../User/UserList.jsx';
+import SystemList from '../System/SystemList.jsx';
 
 class Organization extends Component{
   render(){
@@ -27,23 +28,11 @@ class Organization extends Component{
                 refetchOrganization={refetch}
                 users={users}
               />
-              <Grid container>
-                <ItemGrid xs={12} sm={12} md={12}>
-                  <RegularCard
-                    cardTitle="Sistemas"
-                    headerColor="green"
-                    content={
-                      <Table
-                        tableHeaderColor="primary"
-                        tableHead={['Title', <a href="#" onClick={() => refetch()}>Atualizar</a>]}
-                        tableData={
-                          systems ? systems.map(system => [system.name, <Link to={`/system/${system.id}`}>Editar</Link>]) : []
-                        }
-                      />
-                    }
-                  />
-                </ItemGrid>
-              </Grid>
+              <SystemList
+                organizationId={id}
+                refetchOrganization={refetch}
+                systems={systems}
+              />
             </div>
           }
         />
@@ -67,6 +56,8 @@ export default graphql(gql`
         id
         name
         email
+        system { id }
+        user_role
       }
       systems {
         id

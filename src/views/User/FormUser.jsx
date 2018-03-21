@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RegularCard, Table, CustomInput, Button } from 'components';
+import { RegularCard, Table, CustomInput, Button, SystemSelect } from 'components';
 import { P } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -21,10 +21,15 @@ const customStyles = {
 };
 
 class FormUser extends Component {
-  state = { name: this.props.name, email: this.props.email };
+  state = {
+    name: this.props.name,
+    email: this.props.email,
+    userRole: this.props.user_role || 'organizationAdmin',
+    systemId: this.props.system ? this.props.system.id : ''
+  };
 
   onCancel = () => {
-    this.setState({ name: '', email: '' });
+    this.setState({ name: '', email: '', userRole: 'organizationAdmin', systemId: '' });
     this.props.onCancel();
   }
 
@@ -50,6 +55,24 @@ class FormUser extends Component {
             onChange: e => this.setState({ email: e.target.value })
           }}
         />
+        <div>
+          <select value={this.state.userRole} onChange={e => this.setState({ userRole: e.target.value })}>
+            <option value="organizationAdmin">Administrador da Organização</option>
+            <option value="systemAdmin">Administrador de um sistema</option>
+            <option value="systemMember">Membro de um sistema</option>
+          </select>
+        </div>
+        <div>
+          {
+            this.state.userRole !== 'organizationAdmin' &&
+            <SystemSelect
+              organizationId={this.props.organizationId}
+              value={this.state.systemId}
+              onChange={e => this.setState({ systemId: e.target.value })}
+            />
+          }
+        </div>
+
         <Button onClick={this.onCancel} color="error">Cancel</Button>
         <Button onClick={() => this.props.onSubmit(this.state)} color="success">Enviar</Button>
       </div>

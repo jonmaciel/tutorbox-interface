@@ -22,11 +22,13 @@ const customStyles = {
 };
 
 class CreateUserModal extends Component {
-  onCreate = ({ name, email }) => {
+  onCreate = ({ name, email, userRole, systemId }) => {
     this.props.mutate({
       variables: {
         name,
         email,
+        userRole,
+        systemId,
         organizationId: this.props.organizationId,
       }
     }).then(({ data }) => {
@@ -51,6 +53,7 @@ class CreateUserModal extends Component {
           onSubmit={this.onCreate}
           onChange={this.onChange}
           onCancel={this.props.closeModal}
+          organizationId={this.props.organizationId}
         />
       </Modal>
     )
@@ -68,13 +71,20 @@ CreateUserModal.propTypes = {
 };
 
 export default graphql(gql`
-  mutation createNewUser($organizationId: ID!, $name: String!, $email: String!) {
+  mutation createNewUser(
+    $organizationId: ID!,
+    $systemId: ID,
+    $name: String!,
+    $email: String!,
+    $userRole: UserRoles
+  ) {
     createUser(
       input: {
         newUserAttributes: {
           name: $name,
           email: $email,
-          user_role: organizationAdmin,
+          user_role: $userRole,
+          system_id: $systemId,
           organization_id: $organizationId
         }
       }

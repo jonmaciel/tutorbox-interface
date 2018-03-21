@@ -6,7 +6,6 @@ import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import FormUser from './FormUser.jsx';
 
 Modal.setAppElement('#root');
 
@@ -21,45 +20,46 @@ const customStyles = {
   }
 };
 
-class ModalNewVideo extends Component {
+class DeleteOrganization extends Component {
+  onCancel = () => {
+    this.props.closeModal();
+  }
 
-  onCreate = ({ name, email, userRole, systemId }) => {
+  onCreate = () => {
     this.props.mutate({
       variables: {
-        id: this.props.user.id,
-        name,
-        email,
-        userRole,
-        systemId
+        id: this.props.system.id,
       }
     }).then(({ data }) => {
-      this.props.refetchOrganization();
-      this.props.closeModal();
-    }).catch(error => {
+      this.props.refetchOrganizations();
+      this.onCancel();
+    }).catch((error) =>{
         console.log('there was an error sending the query', error);
       }
     );
   }
 
   render () {
-    const { user } = this.props;
-
     return (
       <Modal
         isOpen={this.props.modalIsOpen}
         onAfterOpen={this.props.afterOpenModal}
         onRequestClose={this.props.closeModal}
         style={customStyles}
-        contentLabel="Editar Usuário"
+        contentLabel="Deletar Organização"
       >
         {
-          user &&
-          <FormUser
-            {...user}
-            onSubmit={this.onCreate}
-            onCancel={this.props.closeModal}
-            organizationId={this.props.organizationId}
-          />
+          this.props.system ?
+          <div>
+            <h4 ref={subtitle => this.subtitle = subtitle}>
+              Você tem certeza que deseja deletar deletar a organização
+              <strong> {this.props.system.name} </strong>
+              ?
+            </h4>
+            <Button onClick={this.props.closeModal} color="error">Cancel</Button>
+            <Button onClick={this.onCreate} color="success">Deletar</Button>
+          </div>:
+          <div />
         }
       </Modal>
     )
@@ -67,34 +67,21 @@ class ModalNewVideo extends Component {
 }
 
 
-ModalNewVideo.propTypes = {
+DeleteOrganization.propTypes = {
   data: PropTypes.object.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
   afterOpenModal: PropTypes.func.isRequired,
-  refetchOrganization: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired,
 };
 
 export default graphql(gql`
-  mutation createNewUser(
-    $id: ID!,
-    $systemId: ID,
-    $name: String!,
-    $email: String!,
-    $userRole: UserRoles!,
-  ) {
-    updateUser(
+  mutation deletesystem($id: ID!) {
+    destroySystem(
       input: {
         id: $id,
-        userAttributes: {
-          email: $email,
-          name: $name,
-          email: $email,
-          system_id: $systemId,
-          user_role: $userRole,
-        }
       }
     ) {
-      user { id }
+      success
     }
-  }`)(ModalNewVideo);
+  }`)(DeleteOrganization);

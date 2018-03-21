@@ -56,6 +56,7 @@ class UserList extends Component {
               user={this.state.currentUser}
               modalIsOpen={this.state.isModalEditOpen}
               closeModal={this.closeEditModal}
+              organizationId={this.props.organizationId}
               refetchOrganization={this.props.refetchOrganization}
             />
           }
