@@ -44,21 +44,24 @@ class CommentList extends Component {
       headerColor="green"
       cardTitle="Comentários"
       content={
-      <div>
-        {video.comments.map(({ id, body, author: { name }}) =>
-          <div className={typo}>
-            <div className={note}>
-              {name}
+        <div>
+          {video.comments.map(({ id, body, author: { name }}) =>
+            <div className={typo}>
+              <div className={note}>
+                {name}
+              </div>
+              <P>
+                {body}
+                <DeleteComment commentId={id} refetchComments={refetch} />
+              </P>
             </div>
-            <P>
-              {body}
-              <DeleteComment commentId={id} refetchComments={refetch} />
-            </P>
-          </div>
-        )}
+          )}
+        </div>
+      }
+      footer={
         <NewComment videoId={video.id} refetchComments={refetch} />
-      </div>
-    } />
+      }
+    />
   }
 
 };
