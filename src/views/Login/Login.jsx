@@ -2,10 +2,24 @@ import React from 'react';
 import { withStyles, Grid } from 'material-ui'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import Modal from 'react-modal';
 import {
   RegularCard, Table, ItemGrid, Tasks, CustomInput, Button
 } from 'components';
 import { AUTH_TOKEN, SIGNUP_REST_URL, getToken, setToken } from '../../consts.jsx';
+
+const customStyles = {
+  content : {
+    top: '30%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    border: 0,
+    backgroundColor: 'transparent',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 class Login extends React.Component{
   state = {
@@ -37,32 +51,36 @@ class Login extends React.Component{
     }
 
     return(
-      <RegularCard
-          headerColor="blue"
-          cardTitle="Login"
-          content={
-          <div>
-              <CustomInput
-                labelText="Email"
-                value={this.state.email}
-                formControlProps={{ fullWidth: true }}
-                inputProps={{
-                  onChange: e => this.setState({ email: e.target.value })
-                }}
-              />
-              <CustomInput
-                labelText="Senha"
-                value={this.state.password}
-                formControlProps={{ fullWidth: true  }}
-                inputProps={{
-                  onChange: e => this.setState({ password: e.target.value }),
-                  type: "password"
-                }}
-              />
-              <Button color="success" onClick={this._login}>Enviar</Button>
-              <Button color="success" onClick={() => { alert(localStorage.getItem(AUTH_TOKEN)) }}>See it</Button>
-          </div>
-        } />
+      <Modal
+        isOpen={true}
+        style={customStyles}
+      >
+        <RegularCard
+            headerColor="blue"
+            cardTitle="Login"
+            content={
+            <div>
+                <CustomInput
+                  labelText="Email"
+                  value={this.state.email}
+                  formControlProps={{ fullWidth: true }}
+                  inputProps={{
+                    onChange: e => this.setState({ email: e.target.value })
+                  }}
+                />
+                <CustomInput
+                  labelText="Senha"
+                  value={this.state.password}
+                  formControlProps={{ fullWidth: true  }}
+                  inputProps={{
+                    onChange: e => this.setState({ password: e.target.value }),
+                    type: "password"
+                  }}
+                />
+                <Button color="success" onClick={this._login}>Enviar</Button>
+            </div>
+          } />
+      </Modal>
     );
   }
 }
