@@ -51,9 +51,9 @@ class OrganizationList extends Component {
           />
           <a href="#" onClick={() => refetch()}>Atualizar</a>
           <RegularCard
-            cardTitle="Organizations"
+            cardTitle="Organizações"
             headerColor="blue"
-            cardSubtitle="Aqui estão seus vídeos em rascunho"
+            cardSubtitle="Aqui estão as organizações cadastradas no sistema"
             content={
               <Table
                 tableHeaderColor="primary"

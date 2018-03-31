@@ -49,9 +49,9 @@ class SystemList extends Component {
             system={this.state.currentSystem}
           />
           <RegularCard
-            cardTitle="Organizations"
+            cardTitle="Sistemas"
             headerColor="green"
-            cardSubtitle="Aqui estão os systemas dessa organização"
+            cardSubtitle="Aqui estão os sistemas dessa organização"
             content={
               <Table
                 tableHeaderColor="primary"

@@ -1,5 +1,6 @@
 import VideoList from "views/VideoList/VideoList.jsx";
 import OrganizationList from "views/Organization/OrganizationList.jsx";
+import TutormakerList from "views/Tutormaker/TutormakerList.jsx";
 import Organization from "views/Organization/Organization.jsx";
 import MediaPlayer from "views/Video/MediaPlayer.jsx";
 import Login from "views/Login/Login.jsx";
@@ -9,6 +10,7 @@ import {
 
 const appRoutes = [
     { path: "/login", component: Login },
+    { path: "/tutormakers", sidebarName: "Tutormakers", navbarName: '', icon: Person, component: TutormakerList },
     { path: "/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList },
     { path: "/organization/:id", component: Organization },
     { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList },

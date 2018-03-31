@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { RegularCard, Table, ItemGrid } from 'components';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import CreateUserModal from './CreateUserModal.jsx';
 import EditUserModal from './EditUserModal.jsx';
 import DeleteUserModal from './DeleteUserModal.jsx';
@@ -39,8 +41,9 @@ class UserList extends Component {
   }
 
   render() {
-    const { users, refetch } = this.props;
+    const { data: { tutormakers, refetch }, error } = this.props;
 
+    if (!tutormakers) { return <div />  }
 
     return (
       <Grid container>
@@ -49,7 +52,7 @@ class UserList extends Component {
             modalIsOpen={this.state.isModalCreateOpen}
             closeModal={this.closeCreateModal}
             organizationId={this.props.organizationId}
-            refetchOrganization={this.props.refetchOrganization}
+            refetch={refetch}
           />
           { this.state.currentUser &&
             <EditUserModal
@@ -57,7 +60,7 @@ class UserList extends Component {
               modalIsOpen={this.state.isModalEditOpen}
               closeModal={this.closeEditModal}
               organizationId={this.props.organizationId}
-              refetchOrganization={this.props.refetchOrganization}
+              refetch={refetch}
             />
           }
           { this.state.currentUser &&
@@ -65,24 +68,25 @@ class UserList extends Component {
               user={this.state.currentUser}
               modalIsOpen={this.state.isModalDeleteOpen}
               closeModal={this.closeDeleteModal}
-              refetchOrganization={this.props.refetchOrganization}
+              refetch={refetch}
             />
           }
           <RegularCard
-            cardTitle="Usuários"
-            headerColor="green"
-            cardSubtitle="Aqui estão os usuários dessa organização"
+            cardTitle="Tutormakers"
+            headerColor="blue"
+            cardSubtitle="Esssa é a lista de Tutormakers"
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
+                tableHead={['Title', 'Papel', <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
                 tableData={
-                  users.map(user =>
+                  tutormakers.map(tutormaker =>
                     [
-                      user.name,
+                      tutormaker.name,
+                      tutormaker.user_role,
                       <div>
-                        <a href="#" onClick={ () => this.openEditModal(user) }>Editar</a>
-                        <a href="#" onClick={ () => this.openDeleteModal(user) }>Delete</a>
+                        <a href="#" onClick={ () => this.openEditModal(tutormaker) }>Editar</a>
+                        <a href="#" onClick={ () => this.openDeleteModal(tutormaker) }>Delete</a>
                       </div>
                     ])
                 }
@@ -95,4 +99,13 @@ class UserList extends Component {
   }
 }
 
-export default UserList;
+export default graphql(gql`
+  {
+    tutormakers {
+      id
+      user_role
+      name
+      email
+    }
+  }
+`)(UserList);
