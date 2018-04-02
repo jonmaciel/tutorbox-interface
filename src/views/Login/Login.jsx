@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import {
   RegularCard, Table, ItemGrid, Tasks, CustomInput, Button
 } from 'components';
-import { AUTH_TOKEN, SIGNUP_REST_URL, getToken, setToken } from '../../consts.jsx';
+import { AUTH_TOKEN, SIGNUP_REST_URL, getToken, setToken, setUser } from '../../consts.jsx';
 
 const customStyles = {
   content : {
@@ -37,8 +37,9 @@ class Login extends React.Component{
         password: this.state.password
       }),
     }).then(res => res.json()).then(data => {
-        if(data['auth_token']) {
-          setToken(data['auth_token']);
+        if(data.auth_token) {
+          setUser(data.user);
+          setToken(data.auth_token);
           this.props.history.push('/')
         }  else {
           alert(Object.values(data.error).join(','));

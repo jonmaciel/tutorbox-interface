@@ -8,7 +8,7 @@ import SystemSelect from './Selects/SystemSelect.jsx';
 // // // VideoPage
 // #############################
 
-import VideoPlayer from './VideoPlayer.jsx';
+import VideoPlayer from './VideoPlayer/VideoPlayer.jsx';
 import TaskList from './TaskList.jsx';
 import CommentList from './CommentList/CommentList.jsx';
 

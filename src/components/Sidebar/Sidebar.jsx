@@ -6,6 +6,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { sidebarStyle } from 'variables/styles';
 import { HeaderLinks } from 'components';
+import { getUserRole } from '../../consts.jsx';
 
 class Sidebar extends React.Component {
   // verifies if routeName is the one active (in browser input)
@@ -14,11 +15,12 @@ class Sidebar extends React.Component {
   }
   render() {
     const { classes, color, logo, image, logoText, routes } = this.props;
+    const userRole = getUserRole()
     var links = (
       <List className={classes.list}>
         {
           routes.map((prop,key) => {
-            if(prop.redirect || !prop.sidebarName)
+            if(prop.redirect || !prop.sidebarName || !prop.allowedRole.includes(userRole))
               return null;
             return (
               <NavLink to={prop.path} className={classes.item} activeClassName="active" key={key}>

@@ -11,13 +11,14 @@ import PropTypes from 'prop-types';
 class MediaPlayerIndex extends Component {
   render() {
     const { data: { video, refetch }, error } = this.props;
+
     if(error) { return <div>erroooou!</div>  }
     if(!video) { return <div/> }
     return (
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
           <Link to="/videos">{"< Voltar para lista de vídeos"}</Link>
-          <VideoPlayer {...video} />
+          <VideoPlayer {...video} refetch={refetch} />
           <TaskList tasks={video.tasks} />
           <CommentList videoId={video.id} />
         </ItemGrid>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { RegularCard, Table, ItemGrid, CustomInput, Button, VideoPlayer, TaskList, CommentList} from 'components';
+import CancelButton from './Actions/CancelButton.jsx';
+import SendRequestButton from './Actions/SendRequestButton.jsx';
 import { Grid } from 'material-ui';
 import { Player } from 'video-react';
 
-const VideoPlayerContainer = ({title, description, url, aasm_state}) =>
+const VideoPlayerContainer = ({ id, title, description, url, aasm_state, refetch}) =>
   <RegularCard
     headerColor="orange"
     cardTitle={title}
@@ -29,8 +31,8 @@ const VideoPlayerContainer = ({title, description, url, aasm_state}) =>
     }
     footer={
       <div>
-        <Button color="danger" onClick={() => {}}>Cancelar Vídeo</Button>
-        <Button color="success" onClick={() => {}}>Enviar requisoção</Button>
+        <CancelButton videoId={id} refetchVideo={refetch} />
+        <SendRequestButton videoId={id} refetchVideo={refetch} />
       </div>
     }
   />

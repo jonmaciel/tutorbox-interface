@@ -10,7 +10,7 @@ const TaskList = ({ tasks }) => {
     prevTasks.tasks[task.id] = task.name
     return prevTasks;
   }, { checkedIndexes: [], tasksIndexes: [], tasks: {} } );
-  
+
   // debugger;
 
   return <RegularCard

@@ -10,11 +10,11 @@ import {
 
 const appRoutes = [
     { path: "/login", component: Login },
-    { path: "/tutormakers", sidebarName: "Tutormakers", navbarName: '', icon: Person, component: TutormakerList },
-    { path: "/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList },
-    { path: "/organization/:id", component: Organization },
-    { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList },
-    { path: "/video/:id", component: MediaPlayer },
+    { path: "/tutormakers", sidebarName: "Tutormakers", navbarName: '', icon: Person, component: TutormakerList, allowedRole: ['admin'] },
+    { path: "/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList, allowedRole: ['admin']},
+    { path: "/organization/:id", component: Organization, allowedRole: ['admin'] },
+    { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList, allowedRole: ['admin', 'script_writer'] },
+    { path: "/video/:id", component: MediaPlayer, allowedRole: ['admin', 'script_writer'] },
     { redirect: true, path: "/", to: "/videos", navbarName: "Redirect" }
 ];
 

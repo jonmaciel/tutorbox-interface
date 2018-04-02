@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import ModalNewVideo from './ModalNewVideo.jsx';
 import ModalDeleteVideo from './ModalDeleteVideo.jsx';
+import { isAdmin } from '../../consts.jsx';
 
 class VideoList extends Component {
   state = {
@@ -56,7 +57,7 @@ class VideoList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Situação', <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
+                tableHead={['Title', 'Situação', isAdmin() && <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
                 tableData={
                   videos ? videos.map(video => [
                                                  video.title,
