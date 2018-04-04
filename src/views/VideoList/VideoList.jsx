@@ -90,4 +90,5 @@ export default graphql(gql`
       aasm_state
     }
   }
-`)(VideoList);
+`, { options: { fetchPolicy: 'cache-and-network'} }
+)(VideoList);

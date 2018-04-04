@@ -3,6 +3,7 @@ import { withStyles, Grid } from 'material-ui'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Modal from 'react-modal';
+import client from '../../client';
 import {
   RegularCard, Table, ItemGrid, Tasks, CustomInput, Button
 } from 'components';
@@ -40,7 +41,9 @@ class Login extends React.Component{
         if(data.auth_token) {
           setUser(data.user);
           setToken(data.auth_token);
-          this.props.history.push('/')
+          console.log('novo', data.auth_token);
+          window.location.reload();
+          // this.props.history.push('/app')
         }  else {
           alert(Object.values(data.error).join(','));
         }
@@ -48,7 +51,7 @@ class Login extends React.Component{
 // "email":"example@mail.com","password":"123123123"
   render(){
     if(getToken()) {
-      this.props.history.push('/')
+      this.props.history.push('/app')
     }
 
     return(

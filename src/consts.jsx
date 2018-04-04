@@ -24,5 +24,5 @@ export const isAdmin = () => getUserRole() === 'admin'
 export const logout = () => {
   localStorage.removeItem(AUTH_TOKEN);
   localStorage.removeItem(AUTH_USER);
-  window.location.reload();
+  // window.location.reload();
 }

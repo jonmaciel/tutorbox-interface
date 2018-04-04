@@ -10,9 +10,11 @@ import appRoutes from 'routes/app.jsx';
 import { appStyle } from 'variables/styles';
 import image from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/tutorbox.png';
-
+import { ApolloProvider } from 'react-apollo';
+import client from '../../client';
 
 import { getToken, logout, getUserRole } from '../../consts.jsx';
+
 const switchRoutes = <Switch>
   {
     appRoutes.map((prop, key) => {
@@ -43,7 +45,7 @@ class App extends React.Component{
   }
 
   isLogout(){
-    return this.props.location.pathname === "/logout";
+    return this.props.location.pathname === "/app/logout";
   }
 
   isLogged(){
@@ -57,39 +59,44 @@ class App extends React.Component{
   render(){
     const { classes, ...rest } = this.props;
 
+    client.resetStore()
+
     if(this.isLogout()) {
       logout();
-      // rest.history.push('/login')
+      rest.history.push('/login')
     } else if(!this.isLogin() && !this.isLogged()) {
+      logout();
       rest.history.push('/login')
     }
 
     return (
-      <div className={classes.wrapper}>
-        {!this.isLogin() && <Sidebar
-          routes={appRoutes}
-          logoText="Tutorbox - ADM"
-          logo={logo}
-          image={image}
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.mobileOpen}
-          color="blue"
-          {...rest}
-        />}
-        <div id="container-body" className={!this.isLogin() && classes.mainPanel} ref="mainPanel">
-          {!this.isLogin() && <Header
+      <ApolloProvider client={client}>
+        <div className={classes.wrapper}>
+          {!this.isLogin() && <Sidebar
             routes={appRoutes}
+            logoText="Tutorbox - ADM"
+            logo={logo}
+            image={image}
             handleDrawerToggle={this.handleDrawerToggle}
+            open={this.state.mobileOpen}
+            color="blue"
             {...rest}
           />}
-          <div className={classes.content}>
-            <div className={classes.container}>
-              {switchRoutes}
+          <div id="container-body" className={!this.isLogin() && classes.mainPanel} ref="mainPanel">
+            {!this.isLogin() && <Header
+              routes={appRoutes}
+              handleDrawerToggle={this.handleDrawerToggle}
+              {...rest}
+            />}
+            <div className={classes.content}>
+              <div className={classes.container}>
+                {switchRoutes}
+              </div>
             </div>
+            {!this.isLogin() &&  <Footer />}
           </div>
-          {!this.isLogin() &&  <Footer />}
         </div>
-      </div>
+      </ApolloProvider>
     );
   }
 }

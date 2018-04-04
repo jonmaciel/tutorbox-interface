@@ -14,13 +14,16 @@ class Footer extends React.Component{
           <div className={classes.left}>
             <List className={classes.list}>
               <ListItem className={classes.inlineBlock}>
-                <Link to="/tutormakers" className={classes.block}>Tutormakers</Link>
+                <Link to="/app/tutormakers" className={classes.block}>Tutormakers</Link>
               </ListItem>
               <ListItem className={classes.inlineBlock}>
-                <Link to="/organizations" className={classes.block}>Organizações</Link>
+                <Link to="/app/organizations" className={classes.block}>Organizações</Link>
               </ListItem>
               <ListItem className={classes.inlineBlock}>
-                <Link to="/videos" className={classes.block}>Vídeos</Link>
+                <Link to="/app/videos" className={classes.block}>Vídeos</Link>
+              </ListItem>
+              <ListItem className={classes.inlineBlock}>
+                <Link to="/app/logout" className={classes.block}>Logout</Link>
               </ListItem>
             </List>
           </div>

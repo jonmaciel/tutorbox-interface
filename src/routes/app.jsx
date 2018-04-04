@@ -3,19 +3,18 @@ import OrganizationList from "views/Organization/OrganizationList.jsx";
 import TutormakerList from "views/Tutormaker/TutormakerList.jsx";
 import Organization from "views/Organization/Organization.jsx";
 import MediaPlayer from "views/Video/MediaPlayer.jsx";
-import Login from "views/Login/Login.jsx";
 import {
     Dashboard, Person, ContentPaste, LibraryBooks, BubbleChart, LocationOn, Notifications
 } from 'material-ui-icons';
 
 const appRoutes = [
-    { path: "/login", component: Login },
-    { path: "/tutormakers", sidebarName: "Tutormakers", navbarName: '', icon: Person, component: TutormakerList, allowedRole: ['admin'] },
-    { path: "/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList, allowedRole: ['admin']},
-    { path: "/organization/:id", component: Organization, allowedRole: ['admin'] },
-    { path: "/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList, allowedRole: ['admin', 'script_writer'] },
-    { path: "/video/:id", component: MediaPlayer, allowedRole: ['admin', 'script_writer'] },
-    { redirect: true, path: "/", to: "/videos", navbarName: "Redirect" }
+    { path: "/app/tutormakers", sidebarName: "Tutormakers", navbarName: '', icon: Person, component: TutormakerList, allowedRole: ['admin'] },
+    { path: "/app/organizations", sidebarName: "Lista de Organizações", navbarName: '', icon: Person, component: OrganizationList, allowedRole: ['admin']},
+    { path: "/app/organization/:id", component: Organization, allowedRole: ['admin'] },
+    { path: "/app/videos", sidebarName: "Lista de Vídeos", navbarName: '', icon: ContentPaste, component: VideoList, allowedRole: ['admin', 'script_writer'] },
+    { path: "/app/video/:id", component: MediaPlayer, allowedRole: ['admin', 'script_writer'] },
+    { redirect: true, path: "/app", to: "/app/videos", navbarName: "Redirect" },
+    { redirect: true, path: "/", to: "/app/videos", navbarName: "Redirect" }
 ];
 
 export default appRoutes;
