@@ -16,6 +16,11 @@ class VideoList extends Component {
     currentVideo: undefined,
   };
 
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
+
   openCreateModal = () => {
     this.setState({modalCreateIsOpen: true});
   }
