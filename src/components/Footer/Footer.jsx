@@ -22,6 +22,9 @@ class Footer extends React.Component{
               <ListItem className={classes.inlineBlock}>
                 <Link to="/videos" className={classes.block}>Vídeos</Link>
               </ListItem>
+              <ListItem className={classes.inlineBlock}>
+                <Link to="/logout" className={classes.block}>Logout</Link>
+              </ListItem>
             </List>
           </div>
           <p className={classes.right}>

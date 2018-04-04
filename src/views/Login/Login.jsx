@@ -40,7 +40,8 @@ class Login extends React.Component{
         if(data.auth_token) {
           setUser(data.user);
           setToken(data.auth_token);
-          this.props.history.push('/')
+          // this.props.history.push('/')
+          window.location.reload();
         }  else {
           alert(Object.values(data.error).join(','));
         }
