@@ -31,7 +31,9 @@ class SendVideoRequest extends Component {
         >
           Realmente deseja enviar o vídeo para produção?
         </ConfirmModal>
-        <Button color="success" onClick={() => this.setState({ modalOpen: true })}>Enviar requisoção</Button>
+        <Button color="success" onClick={() => this.setState({ modalOpen: true })}>
+          Enviar requisoção
+        </Button>
       </div>
     )
   }

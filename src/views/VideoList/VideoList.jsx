@@ -5,35 +5,13 @@ import { RegularCard, Table, ItemGrid } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import ModalNewVideo from './ModalNewVideo.jsx';
-import ModalDeleteVideo from './ModalDeleteVideo.jsx';
+import ButtonNewVideo from './ButtonNewVideo.jsx';
+import ButtonModalDelete from './ButtonModalDelete.jsx';
 import { isAdmin } from '../../consts.jsx';
 
 class VideoList extends Component {
-  state = {
-    modalDeleteIsOpen: false,
-    modalCreateIsOpen: false,
-    currentVideo: undefined,
-  };
-
   componentDidMount() {
     this.props.data.refetch();
-  }
-
-  openCreateModal = () => {
-    this.setState({modalCreateIsOpen: true});
-  }
-
-  closeCreateModal = () => {
-    this.setState({modalCreateIsOpen: false});
-  }
-
-  openDeleteModal = (currentVideo) => {
-    this.setState({modalDeleteIsOpen: true, currentVideo});
-  }
-
-  closeDeleteModal = () => {
-    this.setState({ modalDeleteIsOpen: false, currentVideo: undefined });
   }
 
   render() {
@@ -43,17 +21,6 @@ class VideoList extends Component {
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
           <a href="#" onClick={() => refetch()}>Atualizar</a>
-          <ModalNewVideo
-            modalIsOpen={this.state.modalCreateIsOpen}
-            closeModal={this.closeCreateModal}
-            refetchVideos={refetch}
-          />
-          <ModalDeleteVideo
-            modalIsOpen={this.state.modalDeleteIsOpen}
-            closeModal={this.closeDeleteModal}
-            refetchVideos={refetch}
-            video={this.state.currentVideo}
-          />
           <RegularCard
             cardTitle="Vídeos"
             headerColor="blue"
@@ -61,14 +28,14 @@ class VideoList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Situação', isAdmin() && <a href="#" onClick={() => this.openCreateModal()}>Novo</a>]}
+                tableHead={['Title', 'Situação', isAdmin() && <ButtonNewVideo refetch={refetch}/>]}
                 tableData={
                   videos ? videos.map(video => [
                                                  video.title,
                                                  video.aasm_state,
                                                  <div>
                                                    <Link to={`/video/${video.id}`}>Editar</Link>
-                                                   <a href="#" onClick={ () => this.openDeleteModal(video) }>Delete</a>
+                                                    { isAdmin() && <ButtonModalDelete video={video} refetch={refetch} /> }
                                                  </div>]): []
                 }
               />

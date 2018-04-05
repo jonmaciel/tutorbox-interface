@@ -31,7 +31,9 @@ class CancelVideo extends Component {
         >
           Realmente deseja Cancelar o vídeo?
         </ConfirmModal>
-        <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>Cancelar Vídeo</Button>
+        <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>
+          Cancelar Vídeo
+        </Button>
       </div>
     )
   }
