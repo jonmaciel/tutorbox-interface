@@ -55,6 +55,12 @@ import Header from './Header/Header.jsx';
 import HeaderLinks from './Header/HeaderLinks.jsx';
 
 // ##############################
+// // // Modal
+// #############################
+
+import ConfirmModal from './Modal/ConfirmModal.jsx';
+
+// ##############################
 // // // Sidebar
 // #############################
 
@@ -111,6 +117,8 @@ export {
     ItemGrid,
     // Header
     Header, HeaderLinks,
+    // Modal
+    ConfirmModal,
     // Sidebar
     Sidebar,
     //Snackbar

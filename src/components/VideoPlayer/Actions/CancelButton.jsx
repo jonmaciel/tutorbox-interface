@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'components';
+import { Button, ConfirmModal } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 class CancelVideo extends Component {
-  onClick = () => {
+  state = {
+    modalOpen: false,
+  }
+
+  onDelete = () => {
     this.props.mutate({
       variables: {
         videoId: this.props.videoId,
@@ -19,7 +23,16 @@ class CancelVideo extends Component {
 
   render() {
     return(
-      <Button color="danger" onClick={this.onClick}>Cancelar Vídeo</Button>
+      <div>
+        <ConfirmModal
+          modalIsOpen={this.state.modalOpen}
+          onClose={() => this.setState({ modalOpen: false })}
+          onConfirm={this.onDelete}
+        >
+          Realmente deseja Cancelar o vídeo?
+        </ConfirmModal>
+        <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>Cancelar Vídeo</Button>
+      </div>
     )
   }
 }

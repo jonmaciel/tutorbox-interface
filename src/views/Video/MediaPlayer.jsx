@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { RegularCard, Table, ItemGrid, CustomInput, Button, VideoPlayer, TaskList, CommentList} from 'components';
+import { RegularCard, Table, ItemGrid, CustomInput, Button, VideoPlayer, TaskList, CommentList } from 'components';
 import "../../../node_modules/video-react/dist/video-react.css"
 import { P } from 'components';
 import { graphql } from 'react-apollo';

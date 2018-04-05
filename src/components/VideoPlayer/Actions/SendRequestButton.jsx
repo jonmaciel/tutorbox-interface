@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'components';
+import { Button, ConfirmModal } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-class CancelVideo extends Component {
-  onClick = () => {
+class SendVideoRequest extends Component {
+  state = {
+    modalOpen: false
+  }
+
+  onSendRequest = () => {
     this.props.mutate({
       variables: {
         videoId: this.props.videoId,
@@ -19,12 +23,21 @@ class CancelVideo extends Component {
 
   render() {
     return(
-      <Button color="success" onClick={this.onClick}>Enviar requisoção</Button>
+      <div>
+        <ConfirmModal
+          modalIsOpen={this.state.modalOpen}
+          onClose={() => this.setState({ modalOpen: false })}
+          onConfirm={this.onSendRequest}
+        >
+          Realmente deseja enviar o vídeo para produção?
+        </ConfirmModal>
+        <Button color="success" onClick={() => this.setState({ modalOpen: true })}>Enviar requisoção</Button>
+      </div>
     )
   }
 }
 
-CancelVideo.propTypes = {
+SendVideoRequest.propTypes = {
   videoId: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
 };
@@ -40,4 +53,4 @@ export default graphql(gql`
       success
     }
   }`
-)(CancelVideo);
+)(SendVideoRequest);

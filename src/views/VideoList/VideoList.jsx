@@ -20,7 +20,6 @@ class VideoList extends Component {
     this.props.data.refetch();
   }
 
-
   openCreateModal = () => {
     this.setState({modalCreateIsOpen: true});
   }
