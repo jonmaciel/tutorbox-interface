@@ -6,8 +6,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import ModalNewOrganization from './ModalNewOrganization.jsx';
-import ModalDeleteOrganization from './ModalDeleteOrganization.jsx';
+import NewOrganizationButton from './NewOrganizationButton.jsx';
+import DeleteOrganizationButton from './DeleteOrganizationButton.jsx';
 
 class OrganizationList extends Component {
   state = {
@@ -24,31 +24,12 @@ class OrganizationList extends Component {
     this.setState({modalCreateIsOpen: false});
   }
 
-  openDeleteModal = (currentOrganization) => {
-    this.setState({modalDeleteIsOpen: true, currentOrganization});
-  }
-
-  closeDeleteModal = () => {
-    this.setState({ modalDeleteIsOpen: false, currentOrganization: undefined });
-  }
-
   render() {
     const { data: { organizations, refetch }, error } = this.props;
 
     return (
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
-          <ModalNewOrganization
-            modalIsOpen={this.state.modalCreateIsOpen}
-            closeModal={this.closeCreateModal}
-            refetchOrganizations={refetch}
-          />
-          <ModalDeleteOrganization
-            modalIsOpen={this.state.modalDeleteIsOpen}
-            closeModal={this.closeDeleteModal}
-            refetchOrganizations={refetch}
-            organization={this.state.currentOrganization}
-          />
           <a href="#" onClick={() => refetch()}>Atualizar</a>
           <RegularCard
             cardTitle="Organizações"
@@ -57,14 +38,14 @@ class OrganizationList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', <a href="#" onClick={ () => this.openCreateModal() }>Novo</a>]}
+                tableHead={['Title', <NewOrganizationButton refetch={refetch} />]}
                 tableData={
                   organizations ?
                     organizations.map(organization => [
                                                 organization.name,
                                                 <div>
                                                   <Link to={`/organization/${organization.id}`}>Editar</Link>
-                                                   <a href="#" onClick={ () => this.openDeleteModal(organization) }>Delete</a>
+                                                   <DeleteOrganizationButton organization= {organization} refetch={refetch} />
                                                 </div>
                                               ]) :
                     []
