@@ -1,24 +1,9 @@
 import React, { Component } from 'react';
-import { RegularCard, Table, CustomInput, Button, SystemSelect } from 'components';
-import { P } from 'components';
+import { CustomInput, ConfirmModal } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
-
-Modal.setAppElement('#root');
-
-const customStyles = {
-  content : {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
 
 class FormTutormaker extends Component {
   state = {
@@ -29,14 +14,18 @@ class FormTutormaker extends Component {
     passwordConfirmation: ''
   };
 
-  onCancel = () => {
+  handleCancel = () => {
     this.setState({ name: '', email: '', userRole: 'admin',  password: '', passwordConfirmation: ''});
     this.props.onCancel();
   }
 
   render () {
     return (
-      <div>
+      <ConfirmModal
+        modalIsOpen={this.props.modalOpen}
+        onClose={this.handleCancel}
+        onConfirm={() => this.props.onSubmit(this.state)}
+      >
         <h3 ref={subtitle => this.subtitle = subtitle}>Novo Tutormaker</h3>
         <CustomInput
           id="new-comentary"
@@ -86,10 +75,7 @@ class FormTutormaker extends Component {
             onChange: e => this.setState({ passwordConfirmation: e.target.value })
           }}
         />
-
-        <Button onClick={this.onCancel} color="error">Cancel</Button>
-        <Button onClick={() => this.props.onSubmit(this.state)} color="success">Enviar</Button>
-      </div>
+      </ConfirmModal>
     )
   }
 }
