@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import FormTutormaker from './FormTutormaker.jsx';
+import FormUser from './FormUser.jsx';
 
 class CreateUserButton extends Component {
   state = {
     modalOpen: false
   }
 
-  onCreate = variables => {
+  onCreate = variables =>
     this.props.mutate({
       variables: { ...variables }
     }).then(({ data }) => {
@@ -18,18 +18,18 @@ class CreateUserButton extends Component {
         console.log('there was an error sending the query', error);
       }
     );
-  }
 
   render () {
     return (
       <div>
-        <FormTutormaker
+        <FormUser
           onSubmit={this.onCreate}
           onChange={this.onChange}
           onCancel={() => this.setState({ modalOpen: false }) }
           organizationId={this.props.organizationId}
           modalOpen={this.state.modalOpen}
           refetch={this.props.refetch}
+          isTutormaker={this.props.isTutormaker}
         />
         <a href="#" onClick={() => this.setState({ modalOpen: true })}>Novo</a>
       </div>
@@ -41,12 +41,15 @@ class CreateUserButton extends Component {
 CreateUserButton.propTypes = {
   refetch: PropTypes.func.isRequired,
   organizationId: PropTypes.string.isRequired,
+  isTutormaker: PropTypes.bool.isRequired,
 };
 
 export default graphql(gql`
   mutation createNewUser(
     $name: String!,
     $email: String!,
+    $organizationId: ID,
+    $systemId: ID,
     $userRole: UserRoles,
     $password: String,
     $passwordConfirmation: String
@@ -56,6 +59,8 @@ export default graphql(gql`
         newUserAttributes: {
           name: $name,
           email: $email,
+          organization_id: $organizationId,
+          system_id: $systemId,
           user_role: $userRole,
           password: $password,
           password_confirmation: $passwordConfirmation,

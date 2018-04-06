@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import FormTutormaker from './FormTutormaker.jsx';
+import FormUser from './FormUser.jsx';
 
 class EditUserButton extends Component {
   state = {
@@ -28,7 +28,7 @@ class EditUserButton extends Component {
 
     return (
       <div>
-        <FormTutormaker
+        <FormUser
           {...user}
           onSubmit={this.onCreate}
           onChange={this.onChange}
@@ -36,6 +36,7 @@ class EditUserButton extends Component {
           organizationId={this.props.organizationId}
           modalOpen={this.state.modalOpen}
           refetch={this.props.refetch}
+          isTutormaker={this.props.isTutormaker}
         />
         <a href="#" onClick={() => this.setState({ modalOpen: true })}>Edit</a>
       </div>
@@ -48,6 +49,7 @@ EditUserButton.propTypes = {
   user: PropTypes.object.isRequired,
   afterOpenModal: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
+  isTutormaker: PropTypes.bool.isRequired,
 };
 
 export default graphql(gql`

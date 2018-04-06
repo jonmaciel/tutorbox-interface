@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { CustomInput, ConfirmModal } from 'components';
+import { CustomInput, ConfirmModal, SystemSelect } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
 
-class FormTutormaker extends Component {
+class FormUser extends Component {
   state = {
     name: this.props.name,
     email: this.props.email,
     userRole: this.props.user_role || 'admin',
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
+    organizationId: this.props.organizationId,
   };
 
   handleCancel = () => {
@@ -20,6 +21,7 @@ class FormTutormaker extends Component {
   }
 
   render () {
+    const { isTutormaker } = this.props;
     return (
       <ConfirmModal
         modalIsOpen={this.props.modalOpen}
@@ -45,13 +47,26 @@ class FormTutormaker extends Component {
             onChange: e => this.setState({ email: e.target.value })
           }}
         />
-
         <div>
           <select value={this.state.userRole} onChange={e => this.setState({ userRole: e.target.value })}>
-            <option value="admin">Administrador Geral</option>
-            <option value="videoProducer">Produtor de vídeos</option>
-            <option value="scriptWriter">Roteirista</option>
+            { isTutormaker && <option value="admin">Administrador Geral</option> }
+            { isTutormaker && <option value="videoProducer">Produtor de vídeos</option> }
+            { isTutormaker && <option value="scriptWriter">Roteirista</option> }
+            { !isTutormaker && <option value="organizationAdmin">Administrador da Organização</option> }
+            { !isTutormaker && <option value="systemAdmin">Administrador de um sistema</option> }
+            { !isTutormaker && <option value="systemMember">Membro de um sistema</option> }
           </select>
+        </div>
+
+        <div>
+          {
+            ['systemAdmin', 'systemMember'].includes(this.state.userRole) &&
+              <SystemSelect
+                organizationId={this.props.organizationId}
+                value={this.state.systemId}
+                onChange={e => this.setState({ systemId: e.target.value })}
+              />
+          }
         </div>
 
         <CustomInput
@@ -81,11 +96,12 @@ class FormTutormaker extends Component {
 }
 
 
-FormTutormaker.propTypes = {
+FormUser.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
+  onCancel: PropTypes.func.isRequired,
+  isTutormaker: PropTypes.bool.isRequired,
 };
 
-export default FormTutormaker;
+export default FormUser;

@@ -24,14 +24,14 @@ class UserList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Papel', <CreateUserButton organizationId={organizationId} refetch={refetch} />]}
+                tableHead={['Title', 'Papel', <CreateUserButton isTutormaker={true} organizationId={organizationId} refetch={refetch} />]}
                 tableData={
                   tutormakers.map(tutormaker =>
                     [
                       tutormaker.name,
                       tutormaker.user_role,
                       <div>
-                        <EditUserButton user={tutormaker} refetch={refetch} organizationId={organizationId} />
+                        <EditUserButton isTutormaker={true} user={tutormaker} refetch={refetch} organizationId={organizationId} />
                         <DeleteUserButton user={tutormaker} refetch={refetch} />
                       </div>
                     ])
