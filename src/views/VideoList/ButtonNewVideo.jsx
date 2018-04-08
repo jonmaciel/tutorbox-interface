@@ -71,11 +71,13 @@ class ButtonNewVideo extends Component {
           />
           <CustomInput
             id="new-comentary"
-            labelText="Nome da nova organização"
+            labelText="Descrição do vídeo"
             formControlProps={{ fullWidth: true }}
             inputProps={{
               type: 'text',
               value: this.state.description,
+              multiline: true,
+              rows: 5,
               onChange: e => this.setState({ description: e.target.value })
             }}
           />

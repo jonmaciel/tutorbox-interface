@@ -65,6 +65,7 @@ import ConfirmModal from './Modal/ConfirmModal.jsx';
 // #############################
 
 import Sidebar from './Sidebar/Sidebar.jsx';
+import VideoSidebar from './Sidebar/VideoSidebar.jsx';
 
 // ##############################
 // // // Snackbar
@@ -120,7 +121,7 @@ export {
     // Modal
     ConfirmModal,
     // Sidebar
-    Sidebar,
+    Sidebar, VideoSidebar,
     //Snackbar
     Snackbar, SnackbarContent,
     // Table
