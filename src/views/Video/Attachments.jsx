@@ -19,7 +19,7 @@ class Attachments extends Component {
       <div>
         {attachments.map(({id, url, name}) =>
           <div>
-            <a key={id} href={url}>{name}</a>
+            <a target="_blank" key={id} href={url} download>{name}</a>
             <RemoveAttachmentButon attachmentId={id} refetch={refetch} />
           </div>
         )}
