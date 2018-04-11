@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import ReactS3Uploader from 'react-s3-uploader';
+import AttachmentField from './AttachmentField.jsx';
 
 class AddAttachmentButon extends Component {
   state = {
@@ -53,6 +54,7 @@ class AddAttachmentButon extends Component {
             onChange: ({ target: { validity, files: [file] } }) => validity.valid && this.setState({ file })
           }}
         />
+        <AttachmentField />
         <Button onClick={this.addAttachment} color="success">+</Button>
       </div>
     )

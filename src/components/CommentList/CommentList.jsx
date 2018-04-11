@@ -30,13 +30,6 @@ const style = {
 }
 
 class CommentList extends Component {
-
-  componentDidMount() {
-    setInterval(
-      () => this.props.data.refetch(),
-    70000);
-  }
-
   render () {
     const { classes: { typo, note, removeButton }, data: { video, refetch }, error } = this.props;
     if (!video) { return <div /> }
