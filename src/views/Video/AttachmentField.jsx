@@ -26,14 +26,16 @@ class AttachmentField extends Component {
     return(
       <div>
 
-        <ReactS3Uploader
-          getSignedUrl={this.getS3SignedUrl}
-          accept="*"
+<ReactS3Uploader
+  getSignedUrl={this.getS3SignedUrl}
+  accept="*"
           onProgress={console.log}
           onError={console.log}
           onFinish={console.log}
-          contentDisposition="auto"
-        />
+  uploadRequestHeaders={{}}
+  contentDisposition="auto"
+/>
+
 
       </div>
     )
