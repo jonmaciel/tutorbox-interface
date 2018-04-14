@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
-import { Button } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import ReactS3Uploader from 'react-s3-uploader';
+import AttachmentField from './AttachmentField.jsx';
 
 class AddAttachmentButon extends Component {
-  state = {
-    description: this.props.description,
-    script: this.props.script,
-  }
-
-  addAttachment = () => {
-    this.props.mutate({
-      variables: {
-        sourceId: this.props.videoId,
-        url: 'test/teste'
-      }
-    }).then(({ data }) => {
-      this.props.refetch();
-    }).catch((error) =>{
+  saveUpdatedFile = ({ url, name }) =>
+      this.props.mutate({
+        variables: {
+          sourceId: this.props.videoId,
+          url,
+          name
+        },
+      }).then(({ data }) => {
+        this.props.refetch();
+      }).catch((error) => {
         console.log('there was an error sending the query', error);
-      }
-    );
-  }
+      });
+
 
   render () {
-    return <Button onClick={this.addAttachment} color="success">+</Button>
+    return(
+      <div>
+        <AttachmentField saveUpdatedFile={this.saveUpdatedFile} />
+      </div>
+    )
   }
 }
 
@@ -36,11 +36,12 @@ AddAttachmentButon.propTypes = {
 };
 
 export default graphql(gql`
-  mutation($sourceId: ID!, $url: String!) {
+  mutation($sourceId: ID!, $url: String!, $name: String!) {
     createAttachment(
       input: {
         url: $url,
-        sourceId: $sourceId
+        sourceId: $sourceId,
+        name: $name
       }
     ) {
       attachment { id }

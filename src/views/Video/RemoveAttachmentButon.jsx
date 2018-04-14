@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button } from 'components';
 import { graphql } from 'react-apollo';
+import { IconButton } from 'material-ui';
+import { Close } from 'material-ui-icons';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
@@ -24,7 +25,13 @@ class RemoveAttachmentButon extends Component {
   }
 
   render () {
-    return <Button onClick={this.removeAttachment} color="danger">-</Button>
+    return(
+      <IconButton aria-label="Close">
+        <Close
+          onClick={this.removeAttachment}
+        />
+      </IconButton>
+    )
   }
 }
 

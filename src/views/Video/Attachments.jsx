@@ -19,10 +19,11 @@ class Attachments extends Component {
       <div>
         {attachments.map(({id, url, name}) =>
           <div>
-            <a key={id} href={url}>{name}</a>
+            <a key={id} href={`https://s3.amazonaws.com/tutorboxfiles/${url}`} target="_blank" >{name}</a>
             <RemoveAttachmentButon attachmentId={id} refetch={refetch} />
           </div>
         )}
+        <hr />
         <AddAttachmentButon videoId={this.props.videoId} refetch={refetch} />
       </div>
     );
