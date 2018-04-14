@@ -30,6 +30,7 @@ class CreateUserButton extends Component {
           modalOpen={this.state.modalOpen}
           refetch={this.props.refetch}
           isTutormaker={this.props.isTutormaker}
+          title="Novo Usuário"
         />
         <a href="#" onClick={() => this.setState({ modalOpen: true })}>Novo</a>
       </div>

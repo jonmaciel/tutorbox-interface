@@ -10,13 +10,14 @@ class FormUser extends Component {
     name: this.props.name,
     email: this.props.email,
     userRole: this.props.user_role || 'admin',
+    systemId: (this.props.system && this.props.system.id) || '',
     password: '',
     passwordConfirmation: '',
     organizationId: this.props.organizationId,
-  };
+  }
 
   handleCancel = () => {
-    this.setState({ name: '', email: '', userRole: 'admin',  password: '', passwordConfirmation: ''});
+    this.setState({ name: '', email: '', userRole: 'admin',  password: '', passwordConfirmation: '', systemId: ''});
     this.props.onCancel();
   }
 
@@ -28,7 +29,7 @@ class FormUser extends Component {
         onClose={this.handleCancel}
         onConfirm={() => this.props.onSubmit(this.state)}
       >
-        <h3 ref={subtitle => this.subtitle = subtitle}>Novo Tutormaker</h3>
+        <h3 ref={subtitle => this.subtitle = subtitle}>{this.props.title || 'Novo Tutormaker'}</h3>
         <CustomInput
           id="new-comentary"
           labelText="Nome do Usuário"

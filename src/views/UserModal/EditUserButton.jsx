@@ -37,6 +37,7 @@ class EditUserButton extends Component {
           modalOpen={this.state.modalOpen}
           refetch={this.props.refetch}
           isTutormaker={this.props.isTutormaker}
+          title="Editar Usuário"
         />
         <a href="#" onClick={() => this.setState({ modalOpen: true })}>Edit</a>
       </div>
@@ -60,6 +61,8 @@ export default graphql(gql`
     $userRole: UserRoles!,
     $password: String,
     $passwordConfirmation: String,
+    $organizationId: ID,
+    $systemId: ID
   ) {
     updateUser(
       input: {
@@ -70,6 +73,8 @@ export default graphql(gql`
           email: $email,
           user_role: $userRole,
           password: $password,
+          organization_id: $organizationId,
+          system_id: $systemId,
           password_confirmation: $passwordConfirmation,
         }
       }
