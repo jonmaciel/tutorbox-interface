@@ -49,10 +49,12 @@ AttachmentField.propTypes = {
 };
 
 export default graphql(gql`
-  query($fileType: String) {
-    s3SignedUrl(fileType: $fileType) {
+  query($fileType: String, $videoId: ID!) {
+    s3SignedUrl(fileType: $fileType, videoId: $videoId) {
       fileName
       signedUrl
     }
   }
-`)(AttachmentField);
+`, {
+   options: (props) => ({ variables: { videoId: props.videoId } }),
+})(AttachmentField);
