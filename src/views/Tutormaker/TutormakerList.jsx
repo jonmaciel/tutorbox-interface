@@ -9,6 +9,10 @@ import EditUserButton from '../UserModal/EditUserButton.jsx';
 import DeleteUserButton from '../UserModal/DeleteUserButton.jsx';
 
 class UserList extends Component {
+  componentDidMount() {
+    this.props.data.refetch();
+  };
+
   render() {
     const { data: { tutormakers, refetch }, error, organizationId } = this.props;
 

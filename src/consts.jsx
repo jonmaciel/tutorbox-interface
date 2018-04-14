@@ -19,7 +19,9 @@ export const getUserRole = () => {
   return user.user_role
 }
 
+export const getCurrentOrganizationId = () => getUser().organization_id
 export const isAdmin = () => getUserRole() === 'admin'
+export const isOrganizationAdmin = () => getUserRole() === 'organization_admin'
 
 export const logout = () => {
   localStorage.removeItem(AUTH_TOKEN);

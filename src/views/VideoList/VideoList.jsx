@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import ButtonNewVideo from './ButtonNewVideo.jsx';
 import ButtonModalDelete from './ButtonModalDelete.jsx';
-import { isAdmin } from '../../consts.jsx';
+import { isAdmin, isOrganizationAdmin } from '../../consts.jsx';
 
 class VideoList extends Component {
   componentDidMount() {
@@ -28,10 +28,11 @@ class VideoList extends Component {
             content={
               <Table
                 tableHeaderColor="primary"
-                tableHead={['Title', 'Situação', isAdmin() && <ButtonNewVideo refetch={refetch}/>]}
+                tableHead={['Title', 'Sistema', 'Situação', (isAdmin() || isOrganizationAdmin()) && <ButtonNewVideo refetch={refetch}/>]}
                 tableData={
                   videos ? videos.map(video => [
                                                  video.title,
+                                                 video.system.name,
                                                  video.aasm_state,
                                                  <div>
                                                    <Link to={`/video/${video.id}`}>Editar</Link>
@@ -59,6 +60,9 @@ export default graphql(gql`
       id
       title
       aasm_state
+      system {
+        name
+      }
     }
   }
 `)(VideoList);

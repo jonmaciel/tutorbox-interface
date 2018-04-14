@@ -10,6 +10,10 @@ import AddAttachmentButon from './AddAttachmentButon.jsx';
 import RemoveAttachmentButon from './RemoveAttachmentButon.jsx';
 
 class Attachments extends Component {
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
   render() {
     const { data: { attachments, refetch }, error } = this.props;
 

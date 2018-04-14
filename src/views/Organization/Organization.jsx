@@ -9,6 +9,10 @@ import UserList from '../User/UserList.jsx';
 import SystemList from '../System/SystemList.jsx';
 
 class Organization extends Component{
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
   render(){
     const { data: { organization, refetch }, error } = this.props;
     if (!organization) { return <div/> }
@@ -16,7 +20,7 @@ class Organization extends Component{
     const { id, name, users, systems } = organization;
     return (
       <div>
-       <Link to="/organizations">{"< Voltar para lista de organizações"}</Link>
+       {!this.props.organizationId && <Link to="/organizations">{"< Voltar para lista de organizações"}</Link>}
         <RegularCard
           plainCard
           headerColor="green"
@@ -66,5 +70,5 @@ export default graphql(gql`
     }
   }
 `, {
-  options: (props) => ({ variables: { organizationId: props.match.params.id } }),
+  options: (props) => ({ variables: { organizationId: props.organizationId || props.match.params.id } }),
 })(Organization);

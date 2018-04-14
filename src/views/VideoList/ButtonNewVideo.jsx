@@ -1,57 +1,49 @@
 import React, { Component } from 'react';
-import { ConfirmModal, CustomInput, Button } from 'components';
+import { ConfirmModal, CustomInput, Button, OrganizationSelect, SystemSelect } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
-
-Modal.setAppElement('#root');
-
-const customStyles = {
-  content : {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
+import { isOrganizationAdmin, getCurrentOrganizationId } from '../../consts.jsx';
 
 class ButtonNewVideo extends Component {
   state = {
     title: '',
     description: '',
-    modalOpen: false
+    modalOpen: false,
+    systemId: '',
+    organizationId: '',
   };
 
   onCancel = () => {
     this.setState({
       title: '',
       description: '',
+      systemId: '',
+      organizationId: '',
       modalOpen: false
     });
   }
 
-  onCreate = () => {
+  onCreate = () =>
     this.props.mutate({
       variables: {
         title: this.state.title,
         description: this.state.description,
+        systemId: this.state.systemId
       }
     }).then(({ data }) => {
-      this.setState({ title: '' });
-      this.setState({ description: '' });
+      this.setState({ title: '', description: '' });
       this.props.refetch();
       this.onCancel();
     }).catch((error) =>{
         console.log('there was an error sending the query', error);
       }
     );
-  }
 
   render () {
+    const organizationId = isOrganizationAdmin() ? getCurrentOrganizationId() : this.state.organizationId;
+
     return (
       <div>
         <ConfirmModal
@@ -81,6 +73,22 @@ class ButtonNewVideo extends Component {
               onChange: e => this.setState({ description: e.target.value })
             }}
           />
+
+          <div>
+            {
+            !isOrganizationAdmin() && <OrganizationSelect
+                value={organizationId}
+                onChange={e => this.setState({ organizationId: e.target.value })}
+              />
+            }
+          </div>
+
+          <SystemSelect
+            organizationId={organizationId}
+            value={this.state.systemId}
+            onChange={e => this.setState({ systemId: e.target.value })}
+          />
+
         </ConfirmModal>
         <a href="#" onClick={ () => this.setState({ modalOpen: true }) }>Novo</a>
       </div>
@@ -94,13 +102,13 @@ ButtonNewVideo.propTypes = {
 };
 
 export default graphql(gql`
-  mutation createNewVideo($title: String!, $description: String!) {
+  mutation createNewVideo($title: String!, $description: String!, $systemId: ID!) {
     createVideo(
       input: {
         newVideoAttributes: {
           title: $title,
           description: $description,
-          system_id: 1,
+          system_id: $systemId,
         }
       }
     ) {

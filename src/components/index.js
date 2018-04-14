@@ -3,6 +3,7 @@
 // #############################
 
 import SystemSelect from './Selects/SystemSelect.jsx';
+import OrganizationSelect from './Selects/OrganizationSelect.jsx';
 
 // ##############################
 // // // VideoPage
@@ -103,6 +104,7 @@ import A from './Typography/A.jsx';
 
 export {
     SystemSelect,
+    OrganizationSelect,
     VideoPlayer,
     CommentList,
     TaskList,

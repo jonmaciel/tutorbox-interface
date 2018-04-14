@@ -51,8 +51,7 @@ class EditSystemButton extends Component {
       </div>
     )
   }
-}
-
+};
 
 EditSystemButton.propTypes = {
   refetch: PropTypes.func.isRequired,

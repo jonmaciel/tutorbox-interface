@@ -16,6 +16,10 @@ class OrganizationList extends Component {
     currentOrganization: undefined,
   };
 
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
   openCreateModal = () => {
     this.setState({modalCreateIsOpen: true});
   }

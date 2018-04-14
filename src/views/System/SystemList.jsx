@@ -41,7 +41,7 @@ class SystemList extends Component {
       </Grid>
     )
   }
-}
+};
 
 SystemList.propTypes = {
   systems: PropTypes.array,
