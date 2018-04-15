@@ -78,7 +78,7 @@ class ButtonNewVideo extends Component {
             {
             !isOrganizationAdmin() && <OrganizationSelect
                 value={organizationId}
-                onChange={e => this.setState({ organizationId: e.target.value })}
+                onChange={organizationId => this.setState({ organizationId })}
               />
             }
           </div>
@@ -86,7 +86,7 @@ class ButtonNewVideo extends Component {
           <SystemSelect
             organizationId={organizationId}
             value={this.state.systemId}
-            onChange={e => this.setState({ systemId: e.target.value })}
+            onChange={systemId => this.setState({ systemId })}
           />
 
         </ConfirmModal>

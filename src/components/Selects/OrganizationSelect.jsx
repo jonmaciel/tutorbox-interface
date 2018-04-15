@@ -1,14 +1,15 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import SelectField from '../SelectField/SelectField.jsx';
 
 const OrganizationSelect = ({ value, onChange, data: { organizations }, error }) =>
-  <select value={value} onChange={onChange}>
-    <option value=""></option>
-    {
-      organizations.map(organization => <option value={organization.id}>{organization.name}</option>)
-    }
-  </select>
+  <SelectField
+    options={organizations && organizations.map(organization => ({ value: organization.id, label: organization.name }))}
+    placeholder="Selecione a organização..."
+    onChange={onChange}
+    value={value}
+  />
 
 export default graphql(gql`
   {

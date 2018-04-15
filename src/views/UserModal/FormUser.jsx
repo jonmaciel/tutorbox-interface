@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CustomInput, ConfirmModal, SystemSelect } from 'components';
+import { CustomInput, ConfirmModal, SystemSelect, RoleSelect } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withStyles } from 'material-ui';
@@ -49,14 +49,11 @@ class FormUser extends Component {
           }}
         />
         <div>
-          <select value={this.state.userRole} onChange={e => this.setState({ userRole: e.target.value })}>
-            { isTutormaker && <option value="admin">Administrador Geral</option> }
-            { isTutormaker && <option value="videoProducer">Produtor de vídeos</option> }
-            { isTutormaker && <option value="scriptWriter">Roteirista</option> }
-            { !isTutormaker && <option value="organizationAdmin">Administrador da Organização</option> }
-            { !isTutormaker && <option value="systemAdmin">Administrador de um sistema</option> }
-            { !isTutormaker && <option value="systemMember">Membro de um sistema</option> }
-          </select>
+          <RoleSelect
+            isTutormaker={isTutormaker}
+            value={this.state.userRole}
+            onChange={userRole => this.setState({ userRole })}
+          />
         </div>
 
         <div>
@@ -65,7 +62,7 @@ class FormUser extends Component {
               <SystemSelect
                 organizationId={this.props.organizationId}
                 value={this.state.systemId}
-                onChange={e => this.setState({ systemId: e.target.value })}
+                onChange={systemId => this.setState({ systemId })}
               />
           }
         </div>

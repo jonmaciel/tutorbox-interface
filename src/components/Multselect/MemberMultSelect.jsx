@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MultiSelectField from './MultiSelectField.jsx';
+import SelectField from '../SelectField/SelectField.jsx';
 import { RegularCard } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -17,7 +17,7 @@ class MemberMultSelect extends Component {
   }
 
   render () {
-    if(this.props.data.loading) return <div />
+    if(this.props.data.loading) return <div />;
 
     return (
       <RegularCard
@@ -25,7 +25,8 @@ class MemberMultSelect extends Component {
         headerColor="blue"
         style={{ height: '300' }}
         content={
-          <MultiSelectField
+          <SelectField
+            multi
             options={this.props.data.selectMembers.map(member => ({ value: member.id, label: member.name }) )}
             placeholder="Selecione os membros da equipe..."
             onChange={this.handleSelectChange}
@@ -37,7 +38,7 @@ class MemberMultSelect extends Component {
   }
 }
 
-MultiSelectField.propTypes = {
+MemberMultSelect.propTypes = {
   value: PropTypes.array,
 };
 

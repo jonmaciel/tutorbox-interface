@@ -4,6 +4,7 @@
 
 import SystemSelect from './Selects/SystemSelect.jsx';
 import OrganizationSelect from './Selects/OrganizationSelect.jsx';
+import RoleSelect from './Selects/RoleSelect.jsx';
 
 // ##############################
 // // // VideoPage
@@ -61,11 +62,17 @@ import HeaderLinks from './Header/HeaderLinks.jsx';
 
 import ConfirmModal from './Modal/ConfirmModal.jsx';
 
+
 // ##############################
-// // // Multselect
+// // // SelectField
 // #############################
 
-import MultiSelectField from './Multselect/MultiSelectField.jsx';
+import SelectField from './SelectField/SelectField.jsx';
+
+// ##############################
+// // // Multselects
+// #############################
+
 import MemberMultSelect from './Multselect/MemberMultSelect.jsx';
 
 // ##############################
@@ -112,6 +119,7 @@ import A from './Typography/A.jsx';
 export {
     SystemSelect,
     OrganizationSelect,
+    RoleSelect,
     VideoPlayer,
     CommentList,
     TaskList,
@@ -130,7 +138,7 @@ export {
     // Modal
     ConfirmModal,
     // Multselect
-    MultiSelectField,
+    SelectField,
     MemberMultSelect,
     // Sidebar
     Sidebar, VideoSidebar,

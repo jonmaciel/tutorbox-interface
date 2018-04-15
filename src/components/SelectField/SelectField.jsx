@@ -4,7 +4,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import './overwritte.css';
 
-class MultiSelectField extends Component {
+class SelectField extends Component {
   render () {
     return (
       <div className="section">
@@ -12,7 +12,7 @@ class MultiSelectField extends Component {
           {this.props.label}
         </h3>
         <Select
-          multi
+          multi={this.props.multi}
           closeOnSelect={!this.props.stayOpen}
           disabled={this.props.disabled}
           onChange={this.props.onChange}
@@ -28,12 +28,13 @@ class MultiSelectField extends Component {
   }
 }
 
-MultiSelectField.propTypes = {
+SelectField.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.string,
   stayOpen: PropTypes.string,
   value: PropTypes.array,
+  multi: PropTypes.boolean,
 };
 
-export default MultiSelectField;
+export default SelectField;
