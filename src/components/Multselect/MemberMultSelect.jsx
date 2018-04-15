@@ -8,11 +8,17 @@ import { getCurrentOrganizationId } from '../../consts.jsx';
 
 class MemberMultSelect extends Component {
   state = {
-    value: this.props.value,
+    value: this.props.value || '',
   };
 
   handleSelectChange = value => {
-    console.log('You\'ve selected:', value);
+    const newValues = value.split(',')
+    const oldValues = this.state.value.split(',')
+
+    const newMember = newValues.find(x => !oldValues.includes(x));
+    const removedMember = oldValues.find(x => !newValues.includes(x));
+
+    this.props.onChange(newMember, removedMember);
     this.setState({ value });
   }
 
@@ -20,26 +26,20 @@ class MemberMultSelect extends Component {
     if(this.props.data.loading) return <div />;
 
     return (
-      <RegularCard
-        cardTitle="Equipe"
-        headerColor="blue"
-        style={{ height: '300' }}
-        content={
-          <SelectField
-            multi
-            options={this.props.data.selectMembers.map(member => ({ value: member.id, label: member.name }) )}
-            placeholder="Selecione os membros da equipe..."
-            onChange={this.handleSelectChange}
-            value={this.state.value}
-          />
-        }
+      <SelectField
+        multi
+        options={this.props.data.selectMembers.map(member => ({ value: member.id, label: member.name }) )}
+        placeholder="Selecione os membros da equipe..."
+        onChange={this.handleSelectChange}
+        value={this.state.value}
       />
     );
   }
 }
 
 MemberMultSelect.propTypes = {
-  value: PropTypes.array,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default graphql(gql`

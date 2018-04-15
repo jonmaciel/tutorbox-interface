@@ -23,7 +23,7 @@ class Attachments extends Component {
       <div>
         {attachments.map(({id, url, name}) =>
           <div key={id} >
-            <a href={`https://s3.amazonaws.com/tutorboxfiles/${url}`} target="_blank" >{name}</a>
+            <a href={`https://s3.us-east-2.amazonaws.com/tutorbox-files/${url}`} target="_blank">{name}</a>
             <RemoveAttachmentButon key={id} attachmentId={id} refetch={refetch} />
           </div>
         )}

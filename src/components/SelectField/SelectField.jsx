@@ -33,7 +33,7 @@ SelectField.propTypes = {
   placeholder: PropTypes.string,
   disabled: PropTypes.string,
   stayOpen: PropTypes.string,
-  value: PropTypes.array,
+  value: PropTypes.string,
   multi: PropTypes.boolean,
 };
 
