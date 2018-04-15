@@ -62,6 +62,13 @@ import HeaderLinks from './Header/HeaderLinks.jsx';
 import ConfirmModal from './Modal/ConfirmModal.jsx';
 
 // ##############################
+// // // Multselect
+// #############################
+
+import MultiSelectField from './Multselect/MultiSelectField.jsx';
+import MemberMultSelect from './Multselect/MemberMultSelect.jsx';
+
+// ##############################
 // // // Sidebar
 // #############################
 
@@ -122,6 +129,9 @@ export {
     Header, HeaderLinks,
     // Modal
     ConfirmModal,
+    // Multselect
+    MultiSelectField,
+    MemberMultSelect,
     // Sidebar
     Sidebar, VideoSidebar,
     //Snackbar

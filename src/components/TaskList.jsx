@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography } from 'material-ui';
 import { RegularCard, Tasks } from 'components';
-import { Player } from 'video-react';
 
 const TaskList = ({ tasks }) => {
   const tasksParams = tasks.reduce((prevTasks, task) => {
@@ -10,9 +9,6 @@ const TaskList = ({ tasks }) => {
     prevTasks.tasks[task.id] = task.name
     return prevTasks;
   }, { checkedIndexes: [], tasksIndexes: [], tasks: {} } );
-
-  // debugger;
-
   return <RegularCard
     headerColor="green"
     cardTitle="Tarefas"

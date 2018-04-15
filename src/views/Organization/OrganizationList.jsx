@@ -5,27 +5,12 @@ import { RegularCard, Table, ItemGrid } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 import NewOrganizationButton from './NewOrganizationButton.jsx';
 import DeleteOrganizationButton from './DeleteOrganizationButton.jsx';
 
 class OrganizationList extends Component {
-  state = {
-    modalDeleteIsOpen: false,
-    modalCreateIsOpen: false,
-    currentOrganization: undefined,
-  };
-
   componentDidMount() {
     this.props.data.refetch();
-  }
-
-  openCreateModal = () => {
-    this.setState({modalCreateIsOpen: true});
-  }
-
-  closeCreateModal = () => {
-    this.setState({modalCreateIsOpen: false});
   }
 
   render() {

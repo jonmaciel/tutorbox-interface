@@ -6,12 +6,19 @@ import Organization from "views/Organization/Organization.jsx";
 import MediaPlayer from "views/Video/MediaPlayer.jsx";
 import Login from "views/Login/Login.jsx";
 import {
-    Dashboard, Person, Dvr, ContentPaste, LibraryBooks, BubbleChart, LocationOn, Notifications
+    // Dashboard,
+    Person,
+    Dvr,
+    ContentPaste,
+    // LibraryBooks,
+    // BubbleChart,
+    // LocationOn,
+    // Notifications
 } from 'material-ui-icons';
 
 const ALL_USERS = ['admin', 'script_writer', 'video_producer', 'organization_admin', 'system_admin', 'system_member'];
 const END_USERS = ['organization_admin', 'system_admin', 'system_member'];
-const TUTORMAKERS = ['admin', 'script_writer', 'video_producer'];
+// const TUTORMAKERS = ['admin', 'script_writer', 'video_producer'];
 
 const appRoutes = [
     { path: '/login', component: Login },

@@ -1,14 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { RegularCard, Table, ItemGrid, CustomInput, Button, VideoPlayer, TaskList, CommentList, VideoSidebar } from 'components';
-import "../../../node_modules/video-react/dist/video-react.css"
-import { P } from 'components';
+import { RegularCard, ItemGrid, VideoPlayer, TaskList, CommentList, MemberMultSelect } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import DescriptionLiveInput from './DescriptionLiveInput.jsx';
 import Attachments from './Attachments.jsx';
+import "../../../node_modules/video-react/dist/video-react.css"
 
 class MediaPlayerIndex extends Component {
   render() {
@@ -16,25 +15,29 @@ class MediaPlayerIndex extends Component {
 
     if(error) { return <div>erroooou!</div>  }
     if(!video) { return <div/> }
+
+    const { id, tasks, description, script } = video;
+
     return (
       <div>
         <Grid container>
           <ItemGrid xs={12} sm={12} md={8}>
             <Link to="/videos">{"< Voltar para lista de vídeos"}</Link>
             <VideoPlayer {...video} refetch={refetch} />
-            <TaskList tasks={video.tasks} />
-            <CommentList videoId={video.id} />
+            <TaskList tasks={tasks} />
+            <CommentList videoId={id} />
           </ItemGrid>
-           <ItemGrid xs={12} sm={12} md={4}>
+          <ItemGrid xs={12} sm={12} md={4}>
+            <MemberMultSelect videoId={id} />
             <RegularCard
               cardTitle="Informações"
               headerColor="blue"
               style={{ height: '300' }}
               content={
                 <DescriptionLiveInput
-                  videoId={video.id}
-                  description={video.description}
-                  script={video.script}
+                  videoId={id}
+                  description={description}
+                  script={script}
                 />
               }
             />
@@ -43,7 +46,7 @@ class MediaPlayerIndex extends Component {
               headerColor="blue"
               style={{ height: '300' }}
               content={
-                <Attachments videoId={video.id} />
+                <Attachments videoId={id} />
               }
             />
           </ItemGrid>

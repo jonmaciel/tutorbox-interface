@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RegularCard } from 'components'
-import { withStyles, Checkbox, IconButton, Table, TableBody, TableCell, TableRow, Tooltip } from 'material-ui';
+import { withStyles } from 'material-ui';
 import { P } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';

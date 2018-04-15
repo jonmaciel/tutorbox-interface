@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { CustomInput, ConfirmModal } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { withStyles } from 'material-ui';
 import PropTypes from 'prop-types';
 
 class NewOrganizationButton extends Component {
