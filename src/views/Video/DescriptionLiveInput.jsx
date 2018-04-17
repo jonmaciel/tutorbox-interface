@@ -3,6 +3,7 @@ import { CustomInput } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
+import { isVideoProducer } from '../../consts.jsx';
 
 class DescriptionLiveInput extends Component {
   state = {
@@ -40,18 +41,21 @@ class DescriptionLiveInput extends Component {
             onChange: e => this.setState({ description: e.target.value })
           }}
         />
-        <CustomInput
-          id="new-comentary"
-          labelText="Roteiro do vídeo"
-          formControlProps={{ fullWidth: true }}
-          inputProps={{
-            value: this.state.script,
-            onBlur: this.onBlur,
-            multiline: true,
-            rows: 5,
-            onChange: e => this.setState({ script: e.target.value })
-          }}
-        />
+        {
+          isVideoProducer() &&
+          <CustomInput
+            id="new-comentary"
+            labelText="Roteiro do vídeo"
+            formControlProps={{ fullWidth: true }}
+            inputProps={{
+              value: this.state.script,
+              onBlur: this.onBlur,
+              multiline: true,
+              rows: 5,
+              onChange: e => this.setState({ script: e.target.value })
+            }}
+          />
+        }
       </div>
     )
   }

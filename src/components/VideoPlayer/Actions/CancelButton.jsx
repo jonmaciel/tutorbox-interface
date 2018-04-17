@@ -23,7 +23,7 @@ class CancelVideo extends Component {
 
   render() {
     return(
-      <div>
+      <span>
         <ConfirmModal
           modalIsOpen={this.state.modalOpen}
           onClose={() => this.setState({ modalOpen: false })}
@@ -34,7 +34,7 @@ class CancelVideo extends Component {
         <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>
           Cancelar Vídeo
         </Button>
-      </div>
+      </span>
     )
   }
 }

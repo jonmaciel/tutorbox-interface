@@ -11,6 +11,8 @@ import RoleSelect from './Selects/RoleSelect.jsx';
 // #############################
 
 import VideoPlayer from './VideoPlayer/VideoPlayer.jsx';
+import CancelButton from './VideoPlayer/Actions/CancelButton.jsx';
+import SendRequestButton from './VideoPlayer/Actions/SendRequestButton.jsx';
 import TaskList from './TaskList.jsx';
 import CommentList from './CommentList/CommentList.jsx';
 
@@ -121,6 +123,8 @@ export {
     OrganizationSelect,
     RoleSelect,
     VideoPlayer,
+    CancelButton,
+    SendRequestButton,
     CommentList,
     TaskList,
     // Cards

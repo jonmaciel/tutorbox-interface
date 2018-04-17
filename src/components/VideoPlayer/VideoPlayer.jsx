@@ -5,22 +5,11 @@ import SendRequestButton from './Actions/SendRequestButton.jsx';
 import { Grid } from 'material-ui';
 import { Player } from 'video-react';
 
-const headerColor = {
-  draft: 'orange',
-  canceled: 'red',
-  script_creation: 'blue',
-}
 
-const VideoPlayerContainer = ({ id, title, description, url, aasm_state, refetch}) =>
+const VideoPlayerContainer = ({ id, url}) =>
   <RegularCard
-    headerColor={headerColor[aasm_state]}
-    cardTitle={title}
-    cardSubtitle={
-      <div>
-        <p>{description}</p>
-        <span><strong>Situação: </strong>{aasm_state}</span>
-      </div>
-    }
+    headerColor="blue"
+    cardTitle="Vídeo"
     content={
       <Grid container>
         <ItemGrid xs={12} sm={12} md={12}>
@@ -34,12 +23,6 @@ const VideoPlayerContainer = ({ id, title, description, url, aasm_state, refetch
           }
         </ItemGrid>
       </Grid>
-    }
-    footer={
-      <div>
-        { aasm_state === 'draft' && <CancelButton videoId={id} refetchVideo={refetch} /> }
-        { aasm_state === 'draft' &&<SendRequestButton videoId={id} refetchVideo={refetch} /> }
-      </div>
     }
   />
 

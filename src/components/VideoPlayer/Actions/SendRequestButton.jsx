@@ -23,7 +23,7 @@ class SendVideoRequest extends Component {
 
   render() {
     return(
-      <div>
+      <span>
         <ConfirmModal
           modalIsOpen={this.state.modalOpen}
           onClose={() => this.setState({ modalOpen: false })}
@@ -34,7 +34,7 @@ class SendVideoRequest extends Component {
         <Button color="success" onClick={() => this.setState({ modalOpen: true })}>
           Enviar requisoção
         </Button>
-      </div>
+      </span>
     )
   }
 }

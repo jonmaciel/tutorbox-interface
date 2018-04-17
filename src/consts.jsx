@@ -22,6 +22,7 @@ export const getUserRole = () => {
 export const getCurrentOrganizationId = () => getUser().organization_id
 export const isAdmin = () => getUserRole() === 'admin'
 export const isOrganizationAdmin = () => getUserRole() === 'organization_admin'
+export const isVideoProducer = () => getUserRole() === 'video_producer'
 
 export const logout = () => {
   localStorage.removeItem(AUTH_TOKEN);
