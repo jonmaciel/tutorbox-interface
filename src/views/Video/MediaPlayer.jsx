@@ -23,7 +23,7 @@ class MediaPlayerIndex extends Component {
     if(error) { return <div>erroooou!</div>  }
     if(!video) { return <div/> }
 
-    const { id, title, tasks, aasm_state, description, script, users } = video;
+    const { id, title, tasks, aasm_state, description, script, users, state_verbose } = video;
 
     return (
       <div>
@@ -36,12 +36,12 @@ class MediaPlayerIndex extends Component {
                 <div style={{float: 'left'}}>
                   <strong>{title}</strong>
                   <div>
-                    {aasm_state}
+                    {state_verbose}
                   </div>
                 </div>
                 <div style={{float: 'right'}}>
                   { aasm_state === 'draft' && <CancelButton videoId={id} refetchVideo={refetch} /> }
-                  { aasm_state === 'draft' && <SendRequestButton videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'draft' && <SendRequestButton disabled={description === ''} videoId={id} refetchVideo={refetch} /> }
                 </div>
               </div>
             }
@@ -49,7 +49,7 @@ class MediaPlayerIndex extends Component {
               <Grid container>
                 <ItemGrid xs={12} sm={12} md={8}>
                   <VideoPlayer {...video} refetch={refetch} />
-                  <TaskList tasks={tasks} />
+                  { false && <TaskList tasks={tasks} /> }
                   <CommentList videoId={id} />
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={4}>
@@ -60,6 +60,7 @@ class MediaPlayerIndex extends Component {
                     style={{ height: '300' }}
                     content={
                       <DescriptionLiveInput
+                        refetch={refetch}
                         videoId={id}
                         description={description}
                         script={script}
@@ -95,6 +96,7 @@ query($videoId: ID!) {
     description
     script
     aasm_state
+    state_verbose
     url
     tasks { id name done }
     users {

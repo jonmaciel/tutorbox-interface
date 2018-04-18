@@ -3,7 +3,7 @@ import { CustomInput } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { isVideoProducer } from '../../consts.jsx';
+import { isVideoProducer, isScriptWriter } from '../../consts.jsx';
 
 class DescriptionLiveInput extends Component {
   state = {
@@ -19,6 +19,7 @@ class DescriptionLiveInput extends Component {
         script: this.state.script,
       }
     }).then(({ data }) => {
+      this.props.refetch();
       console.log('saved');
     }).catch((error) =>{
         console.log('there was an error sending the query', error);
@@ -37,12 +38,13 @@ class DescriptionLiveInput extends Component {
             value: this.state.description,
             onBlur: this.onBlur,
             multiline: true,
+            readOnly: isVideoProducer(),
             rows: 5,
             onChange: e => this.setState({ description: e.target.value })
           }}
         />
         {
-          isVideoProducer() &&
+          isScriptWriter() &&
           <CustomInput
             id="new-comentary"
             labelText="Roteiro do vídeo"

@@ -33,7 +33,7 @@ class VideoList extends Component {
                   videos ? videos.map(video => [
                                                  video.title,
                                                  video.system.name,
-                                                 video.aasm_state,
+                                                 video.state_verbose,
                                                  <div>
                                                    <Link to={`/video/${video.id}`}>Editar</Link>
                                                     { isAdmin() && <ButtonModalDelete video={video} refetch={refetch} /> }
@@ -60,6 +60,7 @@ export default graphql(gql`
       id
       title
       aasm_state
+      state_verbose
       system {
         name
       }

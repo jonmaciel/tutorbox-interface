@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ConfirmModal } from 'components';
+import { withStyles, Tooltip } from 'material-ui';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { tasksStyle } from 'variables/styles';
 
 class CancelVideo extends Component {
   state = {
@@ -31,9 +33,18 @@ class CancelVideo extends Component {
         >
           Realmente deseja Cancelar o vídeo?
         </ConfirmModal>
-        <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>
-          Cancelar Vídeo
-        </Button>
+        <Tooltip
+          id="tooltip-top"
+          title="Cancelar a rquisição"
+          placement="top"
+          classes={{tooltip: this.props.classes.tooltip}}
+        >
+          <span>
+            <Button color="danger" onClick={() => this.setState({ modalOpen: true })}>
+              Cancelar Vídeo
+            </Button>
+          </span>
+        </Tooltip>
       </span>
     )
   }
@@ -55,4 +66,4 @@ export default graphql(gql`
       success
     }
   }`
-)(CancelVideo);
+)(withStyles(tasksStyle)(CancelVideo));

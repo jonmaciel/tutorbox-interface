@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Checkbox, IconButton, Table, TableBody, TableCell, TableRow, Tooltip, } from 'material-ui';
+import { withStyles, Checkbox, IconButton, Table, TableBody, TableCell, TableRow, Tooltip } from 'material-ui';
 import { Edit, Close, Check } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { tasksStyle } from 'variables/styles';

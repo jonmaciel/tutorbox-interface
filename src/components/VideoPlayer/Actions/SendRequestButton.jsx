@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles, Tooltip } from 'material-ui';
 import { Button, ConfirmModal } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { tasksStyle } from 'variables/styles';
 
 class SendVideoRequest extends Component {
   state = {
@@ -22,6 +24,7 @@ class SendVideoRequest extends Component {
   }
 
   render() {
+    const { disabled, classes } = this.props;
     return(
       <span>
         <ConfirmModal
@@ -31,9 +34,18 @@ class SendVideoRequest extends Component {
         >
           Realmente deseja enviar o vídeo para produção?
         </ConfirmModal>
-        <Button color="success" onClick={() => this.setState({ modalOpen: true })}>
-          Enviar requisoção
-        </Button>
+         <Tooltip
+          id="tooltip-top"
+          title={disabled ?  'Preencha a descrição' : 'Enviar para produção'}
+          placement="top"
+          classes={{tooltip: classes.tooltip}}
+        >
+          <span>
+            <Button disabled={disabled} color="success" onClick={() => this.setState({ modalOpen: true })}>
+              Enviar requisoção
+            </Button>
+          </span>
+        </Tooltip>
       </span>
     )
   }
@@ -42,6 +54,7 @@ class SendVideoRequest extends Component {
 SendVideoRequest.propTypes = {
   videoId: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
+  disabled: PropTypes.boolean,
 };
 
 export default graphql(gql`
@@ -55,4 +68,4 @@ export default graphql(gql`
       success
     }
   }`
-)(SendVideoRequest);
+)(withStyles(tasksStyle)(SendVideoRequest));
