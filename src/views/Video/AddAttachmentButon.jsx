@@ -21,11 +21,7 @@ class AddAttachmentButon extends Component {
 
 
   render () {
-    return(
-      <div>
-        <AttachmentField videoId={this.props.videoId} saveUpdatedFile={this.saveUpdatedFile} />
-      </div>
-    )
+    return <AttachmentField videoId={this.props.videoId} saveUpdatedFile={this.saveUpdatedFile} />;
   }
 }
 

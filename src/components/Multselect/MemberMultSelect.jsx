@@ -25,10 +25,12 @@ class MemberMultSelect extends Component {
   render () {
     if(this.props.data.loading) return <div />;
 
+    const { data: { selectMembers } } = this.props;
+
     return (
       <SelectField
         multi
-        options={this.props.data.selectMembers.map(member => ({ value: member.id, label: member.name }) )}
+        options={selectMembers && selectMembers.map(member => ({ value: member.id, label: member.name }) )}
         placeholder="Selecione os membros da equipe..."
         onChange={this.handleSelectChange}
         value={this.state.value}

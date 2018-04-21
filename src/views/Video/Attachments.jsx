@@ -15,13 +15,14 @@ class Attachments extends Component {
   }
 
   render() {
-    const { data: { attachments, refetch }, error } = this.props;
+    const { data: { attachments, refetch, loading }, error } = this.props;
 
     if(error) { return <div>erroooou!</div>  }
-    if(!attachments) { return <div/> }
+    if(loading) { return <div/> }
+
     return (
       <div>
-        {attachments.map(({id, url, name}) =>
+        {attachments && attachments.map(({id, url, name}) =>
           <div key={id} >
             <a href={`https://s3.us-east-2.amazonaws.com/tutorbox-files/${url}`} target="_blank">{name}</a>
             <RemoveAttachmentButon key={id} attachmentId={id} refetch={refetch} />
