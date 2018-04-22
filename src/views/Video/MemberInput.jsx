@@ -45,7 +45,7 @@ class DescriptionLiveInput extends Component {
         headerColor="blue"
         style={{ height: '300' }}
         content={
-          <MemberMultSelect value={this.props.value.join(',')} onChange={this.onChange} />
+          <MemberMultSelect value={this.props.value.join(',')}  organizationId={this.props.organizationId} onChange={this.onChange} />
         }
       />
     )

@@ -63,6 +63,10 @@ class DescriptionLiveInput extends Component {
   }
 }
 
+DescriptionLiveInput.propTypes = {
+  videoId: PropTypes.string.isRequired,
+  onVideoUpdate: PropTypes.func.isRequired,
+};
 
 DescriptionLiveInput.propTypes = {
   videoId: PropTypes.string.isRequired,

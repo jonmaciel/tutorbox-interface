@@ -11,6 +11,10 @@ class MemberMultSelect extends Component {
     value: this.props.value || '',
   };
 
+  componentDidMount() {
+    this.props.data.refetch();
+  };
+
   handleSelectChange = value => {
     const newValues = value.split(',')
     const oldValues = this.state.value.split(',')
@@ -50,7 +54,8 @@ query selectMembers($organizationId: ID!) {
     id
     name
   }
-}`, {
-  options: () => ({ variables: { organizationId: getCurrentOrganizationId() } }),
+}`,
+{
+  options: props => ({ variables: { organizationId: getCurrentOrganizationId() || props.organizationId } }),
 })(MemberMultSelect);
 

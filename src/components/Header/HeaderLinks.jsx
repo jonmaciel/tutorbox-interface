@@ -36,7 +36,7 @@ class HeaderLinks extends React.Component{
   render(){
     const { classes, data } = this.props;
     const { open } = this.state;
-    const notifications = !data.loading ? data.notifications : {};
+    const notifications = data.notifications || {};
 
     return (
       <div style={{ paddingTop: '10px' }}>
