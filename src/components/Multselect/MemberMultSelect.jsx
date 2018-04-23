@@ -4,7 +4,7 @@ import SelectField from '../SelectField/SelectField.jsx';
 import { RegularCard } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { getCurrentOrganizationId } from '../../consts.jsx';
+import { getCurrentOrganizationId, isVideoProducer } from '../../consts.jsx';
 
 class MemberMultSelect extends Component {
   state = {
@@ -29,12 +29,13 @@ class MemberMultSelect extends Component {
   render () {
     if(this.props.data.loading) return <div />;
 
-    const { data: { selectMembers } } = this.props;
+    const { data: { selectMembers }, users } = this.props;
 
     return (
       <SelectField
         multi
-        options={selectMembers && selectMembers.map(member => ({ value: member.id, label: member.name }) )}
+        readOnly={isVideoProducer()}
+        options={(selectMembers ? selectMembers : users).map(member => ({ value: member.id, label: member.name }) )}
         placeholder="Selecione os membros da equipe..."
         onChange={this.handleSelectChange}
         value={this.state.value}

@@ -6,12 +6,14 @@ import './overwritte.css';
 
 class SelectField extends Component {
   render () {
+    const { readOnly } = this.props;
     return (
       <div className="section">
         <h3 className="section-heading">
           {this.props.label}
         </h3>
         <Select
+          inputProps={ { readOnly } }
           multi={this.props.multi}
           closeOnSelect={!this.props.stayOpen}
           disabled={this.props.disabled}

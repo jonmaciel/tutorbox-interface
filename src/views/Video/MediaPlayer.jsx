@@ -18,6 +18,10 @@ const headerColor = {
 }
 
 class MediaPlayerIndex extends Component {
+  componentDidMount() {
+    this.props.data.refetch();
+  }
+
   render() {
     const { data: { video, refetch }, error } = this.props;
 
@@ -55,7 +59,7 @@ class MediaPlayerIndex extends Component {
                   <CommentList videoId={id} />
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={4}>
-                  <MemberInput videoId={id} organizationId={organization.id} value={users.map(user => user.id)}  />
+                  <MemberInput videoId={id} organizationId={organization.id} users={users} value={users.map(user => user.id)}  />
                   <RegularCard
                     cardTitle="Informações"
                     headerColor="blue"
@@ -108,6 +112,7 @@ query($videoId: ID!) {
     tasks { id name done }
     users {
       id
+      name
     }
     comments {
       id

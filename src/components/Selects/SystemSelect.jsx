@@ -9,15 +9,12 @@ class SystemSelect extends Component {
   };
 
   render() {
-    const { value, onChange, data: { organization }, error } = this.props;
+    const { value, onChange, data, data: { systems }, error } = this.props;
 
     return (
       <SelectField
-        options={
-          organization &&
-          organization.systems &&
-          organization.systems.map(system => ({ value: system.id, label: system.name }))}
-        placeholder="Selecione a organização..."
+        options={systems && systems.map(system => ({ value: system.id, label: system.name }))}
+        placeholder="Selecione o sistema..."
         onChange={onChange}
         value={value}
       />
@@ -26,18 +23,18 @@ class SystemSelect extends Component {
 }
 
 export default graphql(gql`
-  query($organizationId: ID!) {
-    organization(id: $organizationId) {
+  query systemSelect($organizationId: ID!) {
+    systems(organizationId: $organizationId) {
       id
-      systems {
-        id
-        name
-      }
+      name
     }
   }
 `,
   {
-    options: ({ organizationId }) => ({ variables: { organizationId } })
+    options: ({ organizationId }) => {
+      console.log(organizationId)
+      return{ variables: { organizationId } }
+    }
   }
 )(SystemSelect);
 

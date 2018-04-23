@@ -39,13 +39,14 @@ class DescriptionLiveInput extends Component {
   }
 
   render () {
+    const { organizationId, users } = this.props;
     return (
       <RegularCard
         cardTitle="Equipe"
         headerColor="blue"
         style={{ height: '300' }}
         content={
-          <MemberMultSelect value={this.props.value.join(',')}  organizationId={this.props.organizationId} onChange={this.onChange} />
+          <MemberMultSelect value={this.props.value.join(',')}  organizationId={organizationId} users={users} onChange={this.onChange} />
         }
       />
     )
