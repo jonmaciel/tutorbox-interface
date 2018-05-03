@@ -11,6 +11,7 @@ import RoleSelect from './Selects/RoleSelect.jsx';
 // #############################
 
 import VideoPlayer from './VideoPlayer/VideoPlayer.jsx';
+import AcceptProductionButton from './VideoPlayer/Actions/AcceptProductionButton.jsx';
 import CancelButton from './VideoPlayer/Actions/CancelButton.jsx';
 import SendRequestButton from './VideoPlayer/Actions/SendRequestButton.jsx';
 import SendToProductionButton from './VideoPlayer/Actions/SendToProductionButton.jsx';
@@ -123,7 +124,7 @@ export {
     SystemSelect,
     OrganizationSelect,
     RoleSelect,
-    VideoPlayer, CancelButton, SendRequestButton, SendToProductionButton,
+    VideoPlayer, AcceptProductionButton, CancelButton, SendRequestButton, SendToProductionButton,
     CommentList,
     TaskList,
     // Cards

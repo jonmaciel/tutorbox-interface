@@ -1,14 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { RegularCard, ItemGrid, VideoPlayer, TaskList, CommentList, CancelButton, SendRequestButton, SendToProductionButton } from 'components';
+import { RegularCard, ItemGrid, VideoPlayer, TaskList, CommentList, CancelButton, SendRequestButton, SendToProductionButton, AcceptProductionButton } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import DescriptionLiveInput from './DescriptionLiveInput.jsx';
 import MemberInput from './MemberInput.jsx';
 import Attachments from './Attachments.jsx';
-import { isScriptWriter } from '../../consts.jsx';
+import { isScriptWriter, isVideoProducer } from '../../consts.jsx';
 import "../../../node_modules/video-react/dist/video-react.css"
 
 const headerColor = {
@@ -48,6 +48,7 @@ class MediaPlayerIndex extends Component {
                   { aasm_state === 'draft' && <CancelButton videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'draft' && <SendRequestButton disabled={description === ''} videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'script_creation' && isScriptWriter() && <SendToProductionButton disabled={script === ''} videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'waiting_for_production' && isVideoProducer() && <AcceptProductionButton videoId={id} refetchVideo={refetch} /> }
                 </div>
               </div>
             }
