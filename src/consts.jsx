@@ -21,7 +21,7 @@ export const getUserRole = () => {
 
 export const getCurrentOrganizationId = () => getUser().organization_id;
 export const isAdmin = () => getUserRole() === 'admin';
-export const isOrganizationAdmin = () => getUserRole() === 'organization_admin';
+export const isOrganizationAdmin = () => ['organization_admin', 'system_admin', 'system_member'].includes(getUserRole());
 export const isVideoProducer = () => getUserRole() === 'video_producer';
 export const isScriptWriter = () => getUserRole() === 'script_writer';
 

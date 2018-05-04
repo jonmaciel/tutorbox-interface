@@ -1,14 +1,28 @@
 ﻿import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { RegularCard, ItemGrid, VideoPlayer, TaskList, CommentList, CancelButton, SendRequestButton, SendToProductionButton, AcceptProductionButton } from 'components';
+import {
+  RegularCard,
+  ItemGrid,
+  VideoPlayer,
+  TaskList,
+  CommentList,
+  CancelButton,
+  SendRequestButton,
+  SendToProductionButton,
+  AcceptProductionButton,
+  RefusedByCustomer,
+  RefusedByScreenwriter,
+  SendToCustomerRevision,
+  SendToScreenwriterRevision,
+} from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import DescriptionLiveInput from './DescriptionLiveInput.jsx';
 import MemberInput from './MemberInput.jsx';
 import Attachments from './Attachments.jsx';
-import { isScriptWriter, isVideoProducer } from '../../consts.jsx';
+import { isScriptWriter, isVideoProducer, isOrganizationAdmin } from '../../consts.jsx';
 import "../../../node_modules/video-react/dist/video-react.css"
 
 const headerColor = {
@@ -28,7 +42,7 @@ class MediaPlayerIndex extends Component {
     if(error) { return <div>erroooou!</div>  }
     if(!video) { return <div/> }
 
-    const { id, title, tasks, aasm_state, description, script, users, state_verbose, system: { organization } } = video;
+    const { id, title, tasks, aasm_state, description, script, users, state_verbose, revised_by_custumer, system: { organization } } = video;
 
     return (
       <div>
@@ -47,8 +61,13 @@ class MediaPlayerIndex extends Component {
                 <div style={{float: 'right'}}>
                   { aasm_state === 'draft' && <CancelButton videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'draft' && <SendRequestButton disabled={description === ''} videoId={id} refetchVideo={refetch} /> }
-                  { aasm_state === 'script_creation' && isScriptWriter() && <SendToProductionButton disabled={script === ''} videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'script_creation' && isScriptWriter() && <SendToProductionButton disabled={!script || script === ''} videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'waiting_for_production' && isVideoProducer() && <AcceptProductionButton videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'production' && isVideoProducer() && <SendToScreenwriterRevision videoId={id} refetchVideo={refetch} /> }
+
+                  { aasm_state === 'screenwriter_revision' && isScriptWriter() && <RefusedByScreenwriter videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'screenwriter_revision' && isScriptWriter() && <SendToCustomerRevision videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'customer_revision' && isOrganizationAdmin() && <RefusedByCustomer videoId={id} refetchVideo={refetch} /> }
                 </div>
               </div>
             }
@@ -56,7 +75,7 @@ class MediaPlayerIndex extends Component {
               <Grid container>
                 <ItemGrid xs={12} sm={12} md={8}>
                   <VideoPlayer {...video} refetch={refetch} />
-                  { false && <TaskList tasks={tasks} /> }
+                  { revised_by_custumer && <TaskList videoId={id} /> }
                   <CommentList videoId={id} />
                 </ItemGrid>
                 <ItemGrid xs={12} sm={12} md={4}>
@@ -96,31 +115,33 @@ MediaPlayerIndex.propTypes = {
 };
 
 export default graphql(gql`
-query($videoId: ID!) {
-  video(id: $videoId) {
-    id
-    title
-    description
-    script
-    aasm_state
-    state_verbose
-    url
-    system {
-      organization {
+  query($videoId: ID!) {
+    video(id: $videoId) {
+      id
+      title
+      description
+      script
+      aasm_state
+      state_verbose
+      url
+      revised_by_custumer
+      system {
+        organization {
+          id
+        }
+      }
+      users {
         id
+        name
+      }
+      comments {
+        id
+        body
+        author { name }
       }
     }
-    tasks { id name done }
-    users {
-      id
-      name
-    }
-    comments {
-      id
-      body
-      author { name }
-    }
   }
-}`,{
+`,
+{
   options: (props) => ({ variables: { videoId: props.match.params.id } }),
 })(MediaPlayerIndex);
