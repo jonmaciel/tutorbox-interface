@@ -5927,6 +5927,12 @@ react-swipeable-views@^0.12.12:
     react-swipeable-views-utils "^0.12.11"
     warning "^3.0.0"
 
+react-switch@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-2.3.2.tgz#4fc5ce48578a8ea2e0a1433f32eb9af0d1be3c0e"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-transition-group@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.2.1.tgz#e9fb677b79e6455fd391b03823afe84849df4a10"

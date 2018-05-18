@@ -123,6 +123,7 @@ export default graphql(gql`
       script
       aasm_state
       state_verbose
+      version
       url
       revised_by_custumer
       system {
