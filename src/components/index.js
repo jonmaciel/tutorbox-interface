@@ -20,6 +20,7 @@ import RefusedByCustomer from './VideoPlayer/Actions/RefusedByCustomer.jsx';
 import RefusedByScreenwriter from './VideoPlayer/Actions/RefusedByScreenwriter.jsx';
 import SendToCustomerRevision from './VideoPlayer/Actions/SendToCustomerRevision.jsx';
 import SendToScreenwriterRevision from './VideoPlayer/Actions/SendToScreenwriterRevision.jsx';
+import ApproveButton from './VideoPlayer/Actions/ApproveButton.jsx';
 
 
 
@@ -132,7 +133,7 @@ export {
     SystemSelect,
     OrganizationSelect,
     RoleSelect,
-    VideoPlayer, AcceptProductionButton, CancelButton, SendRequestButton, SendToProductionButton, RefusedByCustomer, RefusedByScreenwriter, SendToCustomerRevision, SendToScreenwriterRevision,
+    VideoPlayer, AcceptProductionButton, CancelButton, SendRequestButton, SendToProductionButton, RefusedByCustomer, RefusedByScreenwriter, SendToCustomerRevision, SendToScreenwriterRevision, ApproveButton,
     CommentList,
     TaskList,
     // Cards

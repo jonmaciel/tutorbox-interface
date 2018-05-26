@@ -6,7 +6,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { tasksStyle } from 'variables/styles';
 
-class AcceptProductionButton extends Component {
+class ApproveButton extends Component {
   state = {
     modalOpen: false
   }
@@ -18,13 +18,13 @@ class AcceptProductionButton extends Component {
       }
     }).then(({ data }) => {
       this.props.refetchVideo();
-    }).catch((error) => {
+    }).catch(error => {
       console.log('there was an error sending the query', error);
     });
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes: { tooltip } } = this.props;
     return(
       <span>
         <ConfirmModal
@@ -32,17 +32,17 @@ class AcceptProductionButton extends Component {
           onClose={() => this.setState({ modalOpen: false })}
           onConfirm={this.onSendToProduction}
         >
-          Realmente deseja aceitar a produção desse vídeo?
+          Realmente deseja <strong>aprovar</strong> vídeo?
         </ConfirmModal>
          <Tooltip
           id="tooltip-top"
-          title="Aceitar produção"
+          title="Aprovar vídeo"
           placement="top"
-          classes={{tooltip: classes.tooltip}}
+          classes={{ tooltip }}
         >
           <span>
             <Button color="success" onClick={() => this.setState({ modalOpen: true })}>
-              Aceitar produção
+              Aprovar Vídeo
             </Button>
           </span>
         </Tooltip>
@@ -51,7 +51,7 @@ class AcceptProductionButton extends Component {
   }
 }
 
-AcceptProductionButton.propTypes = {
+ApproveButton.propTypes = {
   videoId: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
 };
@@ -61,10 +61,10 @@ export default graphql(gql`
     changeVideoState(
       input: {
         videoId: $videoId,
-        event: "accept_production",
+        event: "approved_by_customer",
       }
     ) {
       success
     }
   }`
-)(withStyles(tasksStyle)(AcceptProductionButton));
+)(withStyles(tasksStyle)(ApproveButton));

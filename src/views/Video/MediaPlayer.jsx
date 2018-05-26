@@ -15,6 +15,7 @@ import {
   RefusedByScreenwriter,
   SendToCustomerRevision,
   SendToScreenwriterRevision,
+  ApproveButton
 } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -29,6 +30,7 @@ const headerColor = {
   draft: 'orange',
   canceled: 'red',
   script_creation: 'blue',
+  approved: 'green',
 }
 
 class MediaPlayerIndex extends Component {
@@ -61,13 +63,16 @@ class MediaPlayerIndex extends Component {
                 <div style={{float: 'right'}}>
                   { aasm_state === 'draft' && <CancelButton videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'draft' && <SendRequestButton disabled={description === ''} videoId={id} refetchVideo={refetch} /> }
+
                   { aasm_state === 'script_creation' && isScriptWriter() && <SendToProductionButton disabled={!script || script === ''} videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'waiting_for_production' && isVideoProducer() && <AcceptProductionButton videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'production' && isVideoProducer() && <SendToScreenwriterRevision videoId={id} refetchVideo={refetch} /> }
 
                   { aasm_state === 'screenwriter_revision' && isScriptWriter() && <RefusedByScreenwriter videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'screenwriter_revision' && isScriptWriter() && <SendToCustomerRevision videoId={id} refetchVideo={refetch} /> }
+
                   { aasm_state === 'customer_revision' && isOrganizationAdmin() && <RefusedByCustomer videoId={id} refetchVideo={refetch} /> }
+                  { aasm_state === 'customer_revision' && isOrganizationAdmin() && <ApproveButton videoId={id} refetchVideo={refetch} /> }
                 </div>
               </div>
             }
