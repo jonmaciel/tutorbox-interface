@@ -21,6 +21,7 @@ import RefusedByScreenwriter from './VideoPlayer/Actions/RefusedByScreenwriter.j
 import SendToCustomerRevision from './VideoPlayer/Actions/SendToCustomerRevision.jsx';
 import SendToScreenwriterRevision from './VideoPlayer/Actions/SendToScreenwriterRevision.jsx';
 import ApproveButton from './VideoPlayer/Actions/ApproveButton.jsx';
+import CancelProductionButton from './VideoPlayer/Actions/CancelProductionButton.jsx';
 
 
 
@@ -133,7 +134,9 @@ export {
     SystemSelect,
     OrganizationSelect,
     RoleSelect,
-    VideoPlayer, AcceptProductionButton, CancelButton, SendRequestButton, SendToProductionButton, RefusedByCustomer, RefusedByScreenwriter, SendToCustomerRevision, SendToScreenwriterRevision, ApproveButton,
+    VideoPlayer, AcceptProductionButton, CancelButton, SendRequestButton, SendToProductionButton,
+    RefusedByCustomer, RefusedByScreenwriter, SendToCustomerRevision, SendToScreenwriterRevision,
+    ApproveButton, CancelProductionButton,
     CommentList,
     TaskList,
     // Cards

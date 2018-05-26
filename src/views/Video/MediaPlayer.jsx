@@ -15,7 +15,8 @@ import {
   RefusedByScreenwriter,
   SendToCustomerRevision,
   SendToScreenwriterRevision,
-  ApproveButton
+  ApproveButton,
+  CancelProductionButton
 } from 'components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -66,6 +67,8 @@ class MediaPlayerIndex extends Component {
 
                   { aasm_state === 'script_creation' && isScriptWriter() && <SendToProductionButton disabled={!script || script === ''} videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'waiting_for_production' && isVideoProducer() && <AcceptProductionButton videoId={id} refetchVideo={refetch} /> }
+
+                  { aasm_state === 'production' && isVideoProducer() && <CancelProductionButton videoId={id} refetchVideo={refetch} /> }
                   { aasm_state === 'production' && isVideoProducer() && <SendToScreenwriterRevision videoId={id} refetchVideo={refetch} /> }
 
                   { aasm_state === 'screenwriter_revision' && isScriptWriter() && <RefusedByScreenwriter videoId={id} refetchVideo={refetch} /> }
