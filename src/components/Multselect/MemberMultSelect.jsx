@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SelectField from '../SelectField/SelectField.jsx';
-import { RegularCard } from 'components';
+import { IconButton, withStyles} from 'material-ui';
+import { Close } from 'material-ui-icons';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { getCurrentOrganizationId, isVideoProducer } from '../../consts.jsx';
+import { getCurrentOrganizationId } from '../../consts.jsx';
+import { tasksStyle } from 'variables/styles';
 
 class MemberMultSelect extends Component {
   state = {
-    value: this.props.value || '',
+    value: this.props.users
   };
 
   componentDidMount() {
     this.props.data.refetch();
   };
 
-  handleSelectChange = value => {
-    const newValues = value.split(',')
-    const oldValues = this.state.value.split(',')
+  selectdIds = () => this.state.value.map(({ id }) => id);
 
-    const newMember = newValues.find(x => !oldValues.includes(x));
-    const removedMember = oldValues.find(x => !newValues.includes(x));
+  handleSelectChange = (user, isAdd) => {
+    let value = [...this.state.value];
+    const currentIds = this.selectdIds();
+
+    if(isAdd) {
+      value.push(user)
+    } else {
+      value = value.filter(({ id }) => id !== user.id)
+    }
+
+    const newIds = value.map(({ id }) => id);
+    const newMember = newIds.find(x => !currentIds.includes(x));
+    const removedMember = currentIds.find(x => !newIds.includes(x));
 
     this.props.onChange(newMember, removedMember);
     this.setState({ value });
@@ -29,18 +39,47 @@ class MemberMultSelect extends Component {
   render () {
     if(this.props.data.loading) return <div />;
 
-    const { data: { selectMembers }, users } = this.props;
+    const { data: { selectMembers }, users, classes } = this.props;
+    const { value } = this.state;
+    const selectedIds = this.selectdIds();
+    const options = selectMembers.filter(({id}) => !selectedIds.includes(id))
 
-    return (
-      <SelectField
-        multi
-        readOnly={isVideoProducer()}
-        options={(selectMembers ? selectMembers : users).map(member => ({ value: member.id, label: member.name }) )}
-        placeholder="Selecione os membros da equipe..."
-        onChange={this.handleSelectChange}
-        value={this.state.value}
-      />
-    );
+    return(
+      <div>
+        {
+          value.length > 0 &&
+          <div>
+            <strong>Membros:</strong>
+            <div>
+              {
+                value.map(user =>
+                  <div>
+                    {user.name}
+                    <IconButton aria-label="Close">
+                      <Close
+                        className={classes.close}
+                        onClick={() => this.handleSelectChange(user, false)}
+                      />
+                    </IconButton>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+        }
+        {
+          options.length > 0 &&
+          <div>
+            <strong>Opções:</strong>
+            <div>
+              {
+                options.map(user => <button onClick={() => this.handleSelectChange(user, true)}>{user.name}</button>)
+              }
+            </div>
+          </div>
+        }
+      </div>
+    )
   }
 }
 
@@ -50,13 +89,14 @@ MemberMultSelect.propTypes = {
 };
 
 export default graphql(gql`
-query selectMembers($organizationId: ID!) {
-  selectMembers(organizationId: $organizationId) {
-    id
-    name
+  query selectMembers($organizationId: ID!) {
+    selectMembers(organizationId: $organizationId) {
+      id
+      name
+    }
   }
-}`,
+`,
 {
   options: props => ({ variables: { organizationId: getCurrentOrganizationId() || props.organizationId } }),
-})(MemberMultSelect);
+})(withStyles(tasksStyle)(MemberMultSelect));
 
